@@ -1175,7 +1175,22 @@ contract TIKI is ERC20, Ownable {
 
     uint256 public immutable BNBRewardsFee;
     uint256 public immutable liquidityFee;
+    uint256 public immutable mainWallet;
+    uint256 public immutable redistribution;
     uint256 public immutable totalFees;
+
+    struct Fee{
+        uint256    bnbFee;
+        uint256    lPoolFee;
+        uint256    redistributionFee;
+        uint256    walletFee;
+    }
+
+    //    Fee public feesstruct = Fee(10,2,2,1);
+    enum userType { WhiteListedSell,NormalSell,WhiteListedBuys,NormalBuys }
+
+    mapping (userType => Fee) public feeMapping;
+
 
     // sells have fees of 12 and 6 (10 * 1.2 and 5 * 1.2)
     uint256 public immutable sellFeeIncreaseFactor = 120; 
@@ -1212,6 +1227,8 @@ contract TIKI is ERC20, Ownable {
 
     // addresses that can make transfers before presale is over
     mapping (address => bool) private canTransferBeforeTradingIsEnabled;
+    
+    mapping (address => bool) public isNotFirstTx;
 
     mapping (address => bool) public fixedSaleEarlyParticipants;
 
@@ -1257,6 +1274,8 @@ contract TIKI is ERC20, Ownable {
     );
 
     constructor() public ERC20("TIKI", "TIKI") {
+
+        intializeFee();
         uint256 _BNBRewardsFee = 10;
         uint256 _liquidityFee = 5;
 
@@ -1311,6 +1330,59 @@ contract TIKI is ERC20, Ownable {
     receive() external payable {
 
   	}
+
+    function userTypeFee(userType _type) internal returns(uint256 bnbFee,uint256 lpFee,uint256 distributionFee,uint256 walletFee){
+        return (feeMapping[_type].bnbFee,
+        feeMapping[_type].lPoolFee,
+        feeMapping[_type].redistributionFee,
+        feeMapping[_type].walletFee
+        );
+    }
+    function calculateFee(address account ,bool isWhitelisted,uint amount) internal returns(uint256 bnbAmount,uint256 lpAmount,uint256 distributionAmount,uint256 walletAmount) {
+        if(isWhitelisted && isNotFirstTx[account]) {
+            (uint256 bnbFee,uint256 lpFee,uint256 distributionFee,uint256 walletFee) = userTypeFee(userType.NormalBuys);
+            return (
+                lpFee.mul(amount).div(100),
+                bnbFee.mul(amount).div(100),
+                walletFee.mul(amount).div(100),
+                distributionFee.mul(amount).div(100)
+            );
+        }
+        if(isWhitelisted && isNotFirstTx[account]) {
+            (uint256 bnbFee,uint256 lpFee,uint256 distributionFee,uint256 walletFee) = userTypeFee(userType.WhiteListedBuys);
+            return (
+                lpFee.mul(amount).div(100),
+                bnbFee.mul(amount).div(100),
+                walletFee.mul(amount).div(100),
+                distributionFee.mul(amount).div(100)
+            );
+        }
+        if(isWhitelisted && isNotFirstTx[account]) {
+            (uint256 bnbFee,uint256 lpFee,uint256 distributionFee,uint256 walletFee) = userTypeFee(userType.WhiteListedSell);
+            return (
+                lpFee.mul(amount).div(100),
+                bnbFee.mul(amount).div(100),
+                walletFee.mul(amount).div(100),
+                distributionFee.mul(amount).div(100)
+            );
+        }
+        if(isWhitelisted && !isNotFirstTx[account]) {
+            (uint256 bnbFee,uint256 lpFee,uint256 distributionFee,uint256 walletFee) = userTypeFee(userType.NormalSell);
+            return (
+                lpFee.mul(amount).div(100),
+                bnbFee.mul(amount).div(100),
+                walletFee.mul(amount).div(100),
+                distributionFee.mul(amount).div(100)
+            );
+        }
+
+    }
+    function processTax(uint256 bnbAmount,uint256 lpAmount,uint256 distributionAmount,uint256 walletAmount) internal returns(bool){
+        swapTokensForEth(bnbAmount);
+        // addLiquidity(lpAmount); // how much ether against tokens
+        swapAndSendDividends(distributionAmount);
+        super._transfer(msg.sender, mainWallet, walletAmount);
+    }
 
     function updateDividendTracker(address newAddress) public onlyOwner {
         require(newAddress != address(dividendTracker), "TIKI: The dividend tracker already has that address");
@@ -1482,12 +1554,12 @@ contract TIKI is ERC20, Ownable {
             return;
         }
 
-        bool isFixedSaleBuy = from == bounceFixedSaleWallet && to != owner();
+        bool isFixedSaleBuy = from == bounceFixedSaleWallet && to != owner();   // true
 
         // the fixed-sale can only send tokens to the owner or early participants of the fixed sale in the first 10 minutes,
         // or 600 transactions, whichever is first.
-        if(isFixedSaleBuy) {
-            require(block.timestamp >= fixedSaleStartTimestamp, "TIKI: The fixed-sale has not started yet.");
+        if(isFixedSaleBuy) {        //true
+            require(block.timestamp >= fixedSaleStartTimestamp, "TIKI: The fixed-sale has not started yet.");   // true
 
             bool openToEveryone = block.timestamp.sub(fixedSaleStartTimestamp) >= fixedSaleEarlyParticipantDuration ||
                                   numberOfFixedSaleBuys >= fixedSaleEarlyParticipantBuysThreshold;
@@ -1500,23 +1572,24 @@ contract TIKI is ERC20, Ownable {
                 fixedSaleBuyers[to] = true;
                 numberOfFixedSaleBuys = numberOfFixedSaleBuys.add(1);
             }
-
+            // buy logic
             emit FixedSaleBuy(to, amount, fixedSaleEarlyParticipants[to], numberOfFixedSaleBuys);
         }
 
         if( 
-        	!swapping &&
-        	tradingIsEnabled &&
+        	!swapping &&    //  false
+        	tradingIsEnabled &&     // false
             automatedMarketMakerPairs[to] && // sells only by detecting transfer to automated market maker pair
         	from != address(uniswapV2Router) && //router -> pair is removing liquidity which shouldn't have max
             !_isExcludedFromFees[to] //no max for those excluded from fees
         ) {
             require(amount <= maxSellTransactionAmount, "Sell transfer amount exceeds the maxSellTransactionAmount.");
+            (uint256 bnbAmount,uint256 lpAmount,uint256 distributionAmount,uint256 walletAmount) = calculateFee(from,fixedSaleEarlyParticipants[from],amount); // calculate fee for selling
         }
 
-		uint256 contractTokenBalance = balanceOf(address(this));
+		uint256 contractTokenBalance = balanceOf(address(this));    // 0
         
-        bool canSwap = contractTokenBalance >= swapTokensAtAmount;
+        bool canSwap = contractTokenBalance >= swapTokensAtAmount;  // false
 
         if(
             tradingIsEnabled && 
@@ -1538,14 +1611,14 @@ contract TIKI is ERC20, Ownable {
         }
 
 
-        bool takeFee = !isFixedSaleBuy && tradingIsEnabled && !swapping;
+        bool takeFee = !isFixedSaleBuy && tradingIsEnabled && !swapping;    // false
 
         // if any account belongs to _isExcludedFromFee account then remove the fee
         if(_isExcludedFromFees[from] || _isExcludedFromFees[to]) {
             takeFee = false;
         }
 
-        if(takeFee) {
+        if(takeFee) {   // false
         	uint256 fees = amount.mul(totalFees).div(100);
 
             // if sell, multiply by 1.2
@@ -1574,7 +1647,27 @@ contract TIKI is ERC20, Ownable {
 	    	}
         }
     }
+    function intializeFee() internal {
+        feeMapping[userType.NormalBuys].bnbFee = 10;
+        feeMapping[userType.NormalBuys].lPoolFee = 2;
+        feeMapping[userType.NormalBuys].redistributionFee = 2;
+        feeMapping[userType.NormalBuys].walletFee = 1;
 
+        feeMapping[userType.WhiteListedBuys].bnbFee = 10;
+        feeMapping[userType.WhiteListedBuys].lPoolFee = 1;
+        feeMapping[userType.WhiteListedBuys].redistributionFee = 1;
+        feeMapping[userType.WhiteListedBuys].walletFee = 1;
+
+        feeMapping[userType.NormalSell].bnbFee = 10;
+        feeMapping[userType.NormalSell].lPoolFee = 4;
+        feeMapping[userType.NormalSell].redistributionFee = 4;
+        feeMapping[userType.NormalSell].walletFee = 2;
+
+        feeMapping[userType.WhiteListedSell].bnbFee = 5;
+        feeMapping[userType.WhiteListedSell].lPoolFee = 2;
+        feeMapping[userType.WhiteListedSell].redistributionFee = 2;
+        feeMapping[userType.WhiteListedSell].walletFee = 1;
+    }
     function swapAndLiquify(uint256 tokens) private {
         // split the contract balance into halves
         uint256 half = tokens.div(2);
