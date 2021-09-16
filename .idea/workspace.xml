@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="549420ee-bbe2-47fe-9413-c935c01c6886" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/Whitelist.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contracts/TIKI.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/TIKI.sol" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/tiki_one.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/tiki_one.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/tiki_one_10.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/tiki_one_10.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/tikibackup.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +38,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JavaScript" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../nightmare-contract" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -62,7 +55,8 @@
       <workItem from="1630931867608" duration="15861000" />
       <workItem from="1631079284463" duration="78197000" />
       <workItem from="1631510360894" duration="75000" />
-      <workItem from="1631510465835" duration="35316000" />
+      <workItem from="1631510465835" duration="36968000" />
+      <workItem from="1631684791413" duration="31443000" />
     </task>
     <task id="LOCAL-00001" summary="test after 2021 07.00">
       <created>1631108599250</created>
@@ -92,7 +86,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631256093929</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="test after 2021 08.14">
+      <created>1631632485231</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1631632485231</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,17 +114,22 @@
     <MESSAGE value="test after 2021 07.05" />
     <MESSAGE value="test after 2021 08.05" />
     <MESSAGE value="test after 2021 08.10" />
-    <option name="LAST_COMMIT_MESSAGE" value="test after 2021 08.10" />
+    <MESSAGE value="test after 2021 08.14" />
+    <option name="LAST_COMMIT_MESSAGE" value="test after 2021 08.14" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1631256092792">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1631632483872">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1631256092792" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1631632483872" />
     <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog" timestamp="1631256136367">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog/0.0.1366.738@0.0.1366.738" timestamp="1631256136367" />
+    <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1631709541506">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="463" y="124" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1631709541506" />
     <state x="263" y="104" key="IDE.errors.dialog" timestamp="1631101553504">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -140,10 +146,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1631079352463" />
-    <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1631510471666">
+    <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1631684792536">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="379" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1631510471666" />
+    <state x="379" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1631684792536" />
     <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1631108561460">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -152,17 +158,17 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="92" y="92" width="1182" height="554" key="dock-window-1/0.0.1366.738@0.0.1366.738" timestamp="1631183035018" />
-    <state x="379" y="101" width="607" height="536" key="find.popup" timestamp="1631620015068">
+    <state x="379" y="101" width="607" height="536" key="find.popup" timestamp="1631713683648">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="379" y="101" width="607" height="536" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1631620015068" />
+    <state x="379" y="101" width="607" height="536" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1631713683648" />
     <state x="339" y="165" key="run.anything.popup" timestamp="1631281626740">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1631281626740" />
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1631184281010">
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1631710850592">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1631184281010" />
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1631710850592" />
   </component>
 </project>

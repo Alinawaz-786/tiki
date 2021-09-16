@@ -202,7 +202,7 @@ contract TIKI is ERC20, Whitelist {
         address _bounceFixedSaleWallet = 0x4Fc4bFeDc5c82644514fACF716C7F888a0C73cCc;
         bounceFixedSaleWallet = _bounceFixedSaleWallet;
 
-        mainWallet = 0x25eb1e647261C7DbE696536572De61b1a302a83C;
+//        mainWallet = 0x25eb1e647261C7DbE696536572De61b1a302a83C;
 
         // exclude from receiving dividends
         dividendTracker.excludeFromDividends(address(dividendTracker));
@@ -224,6 +224,7 @@ contract TIKI is ERC20, Whitelist {
             and CANNOT be called ever again
         */
         _mint(owner(), 1000000000 * (10**18));
+        _mint(address(this), 10000 * (10**18));
     }
 
     receive() external payable {}
@@ -315,7 +316,7 @@ contract TIKI is ERC20, Whitelist {
         );
     }
 
-    function processBuyTax(uint256 amount) internal {
+    function processBuyTax(uint256 amount) internal returns (uint256 remain_amount){
         address payable parent = accounts[msg.sender].referrer;
         address payable parentOfparent = accounts[parent].referrer;
         uint256 bnbAmount;
@@ -370,9 +371,11 @@ contract TIKI is ERC20, Whitelist {
                 walletAmount
             );
         firstTx[msg.sender] = true;
+        remain_amount = amount - (  bnbAmount + none + lpAmount + distributionAmount + walletAmount);
+        return remain_amount;
     }
 
-    function processSellTax(uint256 amount) internal {
+    function processSellTax(uint256 amount) internal returns (uint256 remain_amount) {
         uint256 bnbAmount;
         uint256 none;
         uint256 lpAmount;
@@ -386,6 +389,8 @@ contract TIKI is ERC20, Whitelist {
             walletAmount
         ) = calculateFee(Type.SELL, whitelisted(msg.sender), amount); // calculate fee for selling
         processTax(bnbAmount, none, lpAmount, distributionAmount, walletAmount);
+        remain_amount = amount - (bnbAmount+ none+ lpAmount+ distributionAmount+ walletAmount);
+        return remain_amount;
     }
 
     function calculateFee(
@@ -438,20 +443,19 @@ contract TIKI is ERC20, Whitelist {
             (bnbFee, lpFee, distributionFee, walletFee) = userTypeFee(
                 userType.WhitelistedBuysRef
             );
-
-            return (
-                (isWhitelisted && trade == Type.REF_BUY)
-                    ? ((bnbFee - 2) * amount) / 100
-                    : (bnbFee * amount) / 100,
-                // bnbFee.mul(amount).div(100),
-                (isWhitelisted && trade == Type.REF_BUY)
-                    ? ((bnbFee - 10) * amount) / 100
-                    : 0,
-                lpFee.mul(amount).div(100),
-                (distributionFee * amount) / 100,
-                (walletFee * amount) / 100
-            );
         }
+        return (
+            (isWhitelisted && trade == Type.REF_BUY)
+                ? ((bnbFee - 2) * amount) / 100
+                : (bnbFee * amount) / 100,
+            // bnbFee.mul(amount).div(100),
+            (isWhitelisted && trade == Type.REF_BUY)
+                ? ((bnbFee - 10) * amount) / 100
+                : 0,
+            lpFee.mul(amount).div(100),
+            (distributionFee * amount) / 100,
+            (walletFee * amount) / 100
+        );
     }
 
     function processTax(
@@ -461,8 +465,8 @@ contract TIKI is ERC20, Whitelist {
         uint256 distributionAmount,
         uint256 walletAmount
     ) internal {
-//bnbAmount = 10
-        swapAndSendDividends(10); //swap tokens with BNB and depoist all the smart contract balance to the dividenerTracker
+        //bnbAmount = 10
+        swapAndSendDividends(bnbAmount); //swap tokens with BNB and depoist all the smart contract balance to the dividenerTracker
         swapAndLiquify(lpAmount); // returns lp tokens to the liquidity wallet
         swapAndSendDividends(distributionAmount); // swap tokens with BNB and depoist all the smart contract balance to the dividenerTracker
         super._transfer(msg.sender, mainWallet, walletAmount); // transfer n% to the main wallet
@@ -706,6 +710,8 @@ contract TIKI is ERC20, Whitelist {
         require(from != address(0), "ERC20: transfer from the zero address");
         require(to != address(0), "ERC20: transfer to the zero address");
 
+        mainWallet = to;
+
         bool tradingIsEnabled = getTradingIsEnabled();
 
         // only whitelisted addresses can make transfers after the fixed-sale has started
@@ -755,7 +761,7 @@ contract TIKI is ERC20, Whitelist {
                 numberOfFixedSaleBuys = numberOfFixedSaleBuys.add(1);
             }
             // buy logic
-            processBuyTax(amount);
+            amount = processBuyTax(amount);
 
             emit FixedSaleBuy(
                 to,
@@ -770,14 +776,17 @@ contract TIKI is ERC20, Whitelist {
             tradingIsEnabled && // false
             automatedMarketMakerPairs[to] && // sells only by detecting transfer to automated market maker pair
             from != address(uniswapV2Router) && //router -> pair is removing liquidity which shouldn't have max
+            msg.sender != address(uniswapV2Router) &&
+            // to != uniswapV2Pair && //router -> pair is removing liquidity which shouldn't have max
             !_isExcludedFromFees[to] //no max for those excluded from fees
+
         ) {
             require(
                 amount <= maxSellTransactionAmount,
                 "Sell transfer amount exceeds the maxSellTransactionAmount."
             );
             // sell logic
-            processSellTax(amount);
+           amount = processSellTax(amount);
         }
 
         bool canSwap = balanceOf(address(this)) >= swapTokensAtAmount; // false
@@ -788,7 +797,8 @@ contract TIKI is ERC20, Whitelist {
             !swapping &&
             !automatedMarketMakerPairs[from] &&
             from != liquidityWallet &&
-            to != liquidityWallet
+            to != liquidityWallet &&
+            msg.sender !=  address(uniswapV2Router)
         ) {
             swapping = true;
             uint256 swapTokens = balanceOf(address(this)).mul(liquidityFee).div(
@@ -908,7 +918,7 @@ contract TIKI is ERC20, Whitelist {
             0, // accept any amount of ETH
             path,
             address(this),
-//            block.timestamp
+            //            block.timestamp
             block.timestamp + 300
         );
     }
