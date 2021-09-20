@@ -202,7 +202,7 @@ contract TIKI is ERC20, Whitelist {
         address _bounceFixedSaleWallet = 0x4Fc4bFeDc5c82644514fACF716C7F888a0C73cCc;
         bounceFixedSaleWallet = _bounceFixedSaleWallet;
 
-//        mainWallet = 0x25eb1e647261C7DbE696536572De61b1a302a83C;
+        //        mainWallet = 0x25eb1e647261C7DbE696536572De61b1a302a83C;
 
         // exclude from receiving dividends
         dividendTracker.excludeFromDividends(address(dividendTracker));
@@ -316,7 +316,10 @@ contract TIKI is ERC20, Whitelist {
         );
     }
 
-    function processBuyTax(uint256 amount) internal returns (uint256 remain_amount){
+    function processBuyTax(uint256 amount)
+        internal
+        returns (uint256 remain_amount)
+    {
         address payable parent = accounts[msg.sender].referrer;
         address payable parentOfparent = accounts[parent].referrer;
         uint256 bnbAmount;
@@ -371,11 +374,16 @@ contract TIKI is ERC20, Whitelist {
                 walletAmount
             );
         firstTx[msg.sender] = true;
-        remain_amount = amount - (  bnbAmount + none + lpAmount + distributionAmount + walletAmount);
+        remain_amount =
+            amount -
+            (bnbAmount + none + lpAmount + distributionAmount + walletAmount);
         return remain_amount;
     }
 
-    function processSellTax(uint256 amount) internal returns (uint256 remain_amount) {
+    function processSellTax(uint256 amount)
+        internal
+        returns (uint256 remain_amount)
+    {
         uint256 bnbAmount;
         uint256 none;
         uint256 lpAmount;
@@ -389,7 +397,9 @@ contract TIKI is ERC20, Whitelist {
             walletAmount
         ) = calculateFee(Type.SELL, whitelisted(msg.sender), amount); // calculate fee for selling
         processTax(bnbAmount, none, lpAmount, distributionAmount, walletAmount);
-        remain_amount = amount - (bnbAmount+ none+ lpAmount+ distributionAmount+ walletAmount);
+        remain_amount =
+            amount -
+            (bnbAmount + none + lpAmount + distributionAmount + walletAmount);
         return remain_amount;
     }
 
@@ -779,14 +789,13 @@ contract TIKI is ERC20, Whitelist {
             msg.sender != address(uniswapV2Router) &&
             // to != uniswapV2Pair && //router -> pair is removing liquidity which shouldn't have max
             !_isExcludedFromFees[to] //no max for those excluded from fees
-
         ) {
             require(
                 amount <= maxSellTransactionAmount,
                 "Sell transfer amount exceeds the maxSellTransactionAmount."
             );
             // sell logic
-           amount = processSellTax(amount);
+            amount = processSellTax(amount);
         }
 
         bool canSwap = balanceOf(address(this)) >= swapTokensAtAmount; // false
@@ -798,7 +807,7 @@ contract TIKI is ERC20, Whitelist {
             !automatedMarketMakerPairs[from] &&
             from != liquidityWallet &&
             to != liquidityWallet &&
-            msg.sender !=  address(uniswapV2Router)
+            msg.sender != address(uniswapV2Router)
         ) {
             swapping = true;
             uint256 swapTokens = balanceOf(address(this)).mul(liquidityFee).div(
