@@ -6,11 +6,14 @@ module.exports = {
   // defaultNetwork: "rinkeby",
   networks: {
     hardhat: {},
-
-    testnet: {
+    rinkeby: {
+      url: "https://rinkeby.infura.io/v3/4913daa7178a4c77823ddea002c39d00",
+      accounts: ['21ece61053289747b70f0c236f8a76bcd13caf0e25be005502d78bc8290e70d6']
+    },
+/*    testnet: {
       url: "https://data-seed-prebsc-1-s1.binance.org:8545",
       accounts: ['21ece61053289747b70f0c236f8a76bcd13caf0e25be005502d78bc8290e70d6'],
-    },
+    },*/
   },
   watcher: {
     compilation: {
@@ -26,10 +29,16 @@ module.exports = {
     }
   },
   etherscan: {
-    apiKey: "VTJJ86VD6ZKVE3WQBMRE1CGP7HUM4Z8KRC"             //testnet BANance
+    // Your API key for Etherscan
+    // Obtain one at https://etherscan.io/
+    apiKey: "XIBRQWVBQ9965HWXU135TCB1HI6CRDJNWW"
   },
+  /*etherscan: {
+    apiKey: "VTJJ86VD6ZKVE3WQBMRE1CGP7HUM4Z8KRC"             //testnet BANance
+  },*/
   solidity: {
-    version: "0.8.0",
+    version: "0.8.6",
+    // version: "0.8.0",
     settings: {
       optimizer: {
         enabled: true,
