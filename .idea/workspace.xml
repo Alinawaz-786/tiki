@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="549420ee-bbe2-47fe-9413-c935c01c6886" name="Default Changelist" comment="">
+    <list default="true" id="549420ee-bbe2-47fe-9413-c935c01c6886" name="Default Changelist" comment="NFT Buying and mint 2021 09.21">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <list id="3b0be1af-19da-46a3-ace2-618e685cdd99" name="Revert &quot;NFT Buying and mint 2021 09.21&quot;" comment="Revert &quot;NFT Buying and mint 2021 09.21&quot;&#10;&#10;This reverts commit 1d95e609">
+      <change afterPath="$PROJECT_DIR$/contracts/DividendPayingToken.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/DividendPayingTokenInterface.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/DividendPayingTokenOptionalInterface.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/Greeter.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/IUniswapV2Factory.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/IUniswapV2Pair.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/IUniswapV2Router.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/IterableMapping.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/SafeMathInt.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/SafeMathUint.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/TIKI.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/Whitelist.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/tiki_one.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/tiki_one_10.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/deploy.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/deploy.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +37,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Solidity Library" />
         <option value="Solidity Contract" />
       </list>
     </option>
@@ -39,7 +60,7 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JavaScript" />
     <property name="last_opened_file_path" value="D:/Solidity-Projects/MyTestToken" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -57,7 +78,9 @@
       <workItem from="1631510465835" duration="36968000" />
       <workItem from="1631684791413" duration="34219000" />
       <workItem from="1631791217538" duration="2656000" />
-      <workItem from="1632114689196" duration="4587000" />
+      <workItem from="1632114689196" duration="5723000" />
+      <workItem from="1632123406307" duration="3892000" />
+      <workItem from="1632130484009" duration="20986000" />
     </task>
     <task id="LOCAL-00001" summary="test after 2021 07.00">
       <created>1631108599250</created>
@@ -94,7 +117,21 @@
       <option name="project" value="LOCAL" />
       <updated>1631632485231</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="test after 2021 08.14">
+      <created>1632121503820</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1632121503820</updated>
+    </task>
+    <task id="LOCAL-00007" summary="NFT Buying and mint 2021 09.21">
+      <created>1632232397995</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1632232397995</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,19 +147,56 @@
       </list>
     </option>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:D:/Solidity_Office/tiki/contracts" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test after 2021 07.00" />
     <MESSAGE value="test after 2021 07.05" />
     <MESSAGE value="test after 2021 08.05" />
     <MESSAGE value="test after 2021 08.10" />
     <MESSAGE value="test after 2021 08.14" />
-    <option name="LAST_COMMIT_MESSAGE" value="test after 2021 08.14" />
+    <MESSAGE value="NFT Buying and mint 2021 09.21" />
+    <option name="LAST_COMMIT_MESSAGE" value="NFT Buying and mint 2021 09.21" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1631632483872">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1632232681598">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1631632483872" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1632232681598" />
     <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog" timestamp="1631256136367">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -135,22 +209,26 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="263" y="104" key="IDE.errors.dialog/0.0.1366.738@0.0.1366.738" timestamp="1631101553504" />
-    <state x="184" y="11" key="SettingsEditor" timestamp="1632119649022">
+    <state x="184" y="11" key="SettingsEditor" timestamp="1632130460880">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="184" y="11" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1632119649022" />
+    <state x="184" y="11" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1632130460880" />
+    <state width="254" height="198" key="ShowFilterAction_Filter_Popup" timestamp="1632209740109">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="254" height="198" key="ShowFilterAction_Filter_Popup/0.0.1366.738@0.0.1366.738" timestamp="1632209740109" />
     <state x="404" y="110" width="540" height="524" key="StructurePopup" timestamp="1631009465184">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="404" y="110" width="540" height="524" key="StructurePopup/0.0.1366.738@0.0.1366.738" timestamp="1631009465184" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1631770136847">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1632232439451">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1631770136847" />
-    <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1632114824134">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1632232439451" />
+    <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1632130491284">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="379" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1632114824134" />
+    <state x="379" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1632130491284" />
     <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1631108561460">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -159,17 +237,17 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="92" y="92" width="1182" height="554" key="dock-window-1/0.0.1366.738@0.0.1366.738" timestamp="1631183035018" />
-    <state x="379" y="101" width="607" height="536" key="find.popup" timestamp="1631713683648">
+    <state x="379" y="101" width="607" height="536" key="find.popup" timestamp="1632218380228">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="379" y="101" width="607" height="536" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1631713683648" />
-    <state x="339" y="165" key="run.anything.popup" timestamp="1632121021030">
+    <state x="379" y="101" width="607" height="536" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1632218380228" />
+    <state x="339" y="165" key="run.anything.popup" timestamp="1632226006757">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1632121021030" />
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1631710850592">
+    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1632226006757" />
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1632218399475">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1631710850592" />
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1632218399475" />
   </component>
 </project>
