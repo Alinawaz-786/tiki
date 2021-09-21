@@ -5,20 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <list id="3b0be1af-19da-46a3-ace2-618e685cdd99" name="Revert &quot;NFT Buying and mint 2021 09.21&quot;" comment="Revert &quot;NFT Buying and mint 2021 09.21&quot;&#10;&#10;This reverts commit 1d95e609">
-      <change afterPath="$PROJECT_DIR$/contracts/DividendPayingToken.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/DividendPayingTokenInterface.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/DividendPayingTokenOptionalInterface.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/Greeter.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/IUniswapV2Factory.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/IUniswapV2Pair.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/IUniswapV2Router.sol" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/contracts/IterableMapping.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/SafeMathInt.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/SafeMathUint.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/TIKI.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/Whitelist.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/tiki_one.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/tiki_one_10.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
@@ -80,7 +67,7 @@
       <workItem from="1631791217538" duration="2656000" />
       <workItem from="1632114689196" duration="5723000" />
       <workItem from="1632123406307" duration="3892000" />
-      <workItem from="1632130484009" duration="20986000" />
+      <workItem from="1632130484009" duration="21235000" />
     </task>
     <task id="LOCAL-00001" summary="test after 2021 07.00">
       <created>1631108599250</created>
@@ -131,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632232397995</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="NFT Buying and mint 2021 09.21">
+      <created>1632232703741</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1632232703741</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,14 +187,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="NFT Buying and mint 2021 09.21" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1632232681598">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1632232852906">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1632232681598" />
-    <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog" timestamp="1631256136367">
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1632232852906" />
+    <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog" timestamp="1632232818680">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog/0.0.1366.738@0.0.1366.738" timestamp="1631256136367" />
+    <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog/0.0.1366.738@0.0.1366.738" timestamp="1632232818680" />
     <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1632115548319">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -221,18 +215,18 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="404" y="110" width="540" height="524" key="StructurePopup/0.0.1366.738@0.0.1366.738" timestamp="1631009465184" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1632232439451">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1632232804498">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1632232439451" />
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1632232804498" />
     <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1632130491284">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="379" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1632130491284" />
-    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1631108561460">
+    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1632232746635">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1631108561460" />
+    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1632232746635" />
     <state x="92" y="92" width="1182" height="554" key="dock-window-1" timestamp="1631183035018">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
