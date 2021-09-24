@@ -393,7 +393,7 @@ library Counters {
             payable(address(0)),
             0,
             0,
-            true
+            false
         );
         allaxieInfinityToBuys[newItemId] = newAxieInfinity;
         return newItemId;
@@ -450,16 +450,19 @@ library Counters {
         require(axieInfinitytobuy.forSale);
         _transfer(tokenOwner, _to, _tokenId);
          address payable sendFrom = axieInfinitytobuy.currentOwner;
-        uint256 amount =  address(_to).balance;
-        uint256 amount_1 =  0.01 ether;
-        // sendFrom.transfer(amount);
-        sendFrom.transfer(amount_1);
+        sendFrom.transfer(msg.value);
         axieInfinitytobuy.previousOwner =  axieInfinitytobuy.currentOwner;
         axieInfinitytobuy.currentOwner  =  _to;
         axieInfinitytobuy.numberOfTransfers +=  1;
         allaxieInfinityToBuys[_tokenId] =  axieInfinitytobuy;
-    }function checkBalance() public returns(uint256){
-        address eth =  0x25eb1e647261C7DbE696536572De61b1a302a83C;
-        return address(payable(eth)).balance;
+    }
+    function changeStatusToken(uint256 _tokenId,bool val) public onlyOwner {
+        require(msg.sender != address(0));
+        require(_exists(_tokenId));
+        address tokenOwner = ownerOf(_tokenId);
+        require(tokenOwner == msg.sender);
+        axieInfinity memory _axieInfinity = allaxieInfinityToBuys[_tokenId];
+        _axieInfinity.forSale = val;
+        allaxieInfinityToBuys[_tokenId] = _axieInfinity;
     }
 }
