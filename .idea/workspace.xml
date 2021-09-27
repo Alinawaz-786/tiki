@@ -2,8 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="549420ee-bbe2-47fe-9413-c935c01c6886" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/contracts/AnnexFixedSwap.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/Governable.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/IAnnexStake.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/newNFT_flat.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/newNFT_flat.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/IterableMapping.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/address-utils.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/demo-nft.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/erc165.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/erc721-metadata.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/erc721-token-receiver.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/erc721.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/newNFT.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/newNFT_flat.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/nf-token-metadata.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/nf-token.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/supports-interface.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nft_backup.rar" beforeDir="false" afterPath="$PROJECT_DIR$/nft_backup.rar" afterDir="false" />
     </list>
     <list id="3b0be1af-19da-46a3-ace2-618e685cdd99" name="Revert &quot;NFT Buying and mint 2021 09.21&quot;" comment="Revert &quot;NFT Buying and mint 2021 09.21&quot;&#10;&#10;This reverts commit 1d95e609">
       <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
@@ -72,7 +87,8 @@
       <workItem from="1631791217538" duration="2656000" />
       <workItem from="1632114689196" duration="5723000" />
       <workItem from="1632123406307" duration="3892000" />
-      <workItem from="1632130484009" duration="59710000" />
+      <workItem from="1632130484009" duration="65394000" />
+      <workItem from="1632489143006" duration="17264000" />
     </task>
     <task id="LOCAL-00001" summary="test after 2021 07.00">
       <created>1631108599250</created>
@@ -151,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632404889554</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="NFT Buying and mint 2021 09.24">
+      <created>1632465041460</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1632465041460</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,13 +235,14 @@
     <MESSAGE value="NFT Buying and mint 2021 09.21" />
     <MESSAGE value="NFT Buying and mint 2021 09.22" />
     <MESSAGE value="NFT Buying and mint 2021 09.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="NFT Buying and mint 2021 09.23" />
+    <MESSAGE value="NFT Buying and mint 2021 09.24" />
+    <option name="LAST_COMMIT_MESSAGE" value="NFT Buying and mint 2021 09.24" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1632404887072">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1632465040075">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1632404887072" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1632465040075" />
     <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog" timestamp="1632232818680">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -243,14 +267,14 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="404" y="110" width="540" height="524" key="StructurePopup/0.0.1366.738@0.0.1366.738" timestamp="1632394137565" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1632404899154">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1632465054360">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1632404899154" />
-    <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1632130491284">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1632465054360" />
+    <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1632489142642">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="379" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1632130491284" />
+    <state x="379" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1632489142642" />
     <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1632465027186">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -259,21 +283,21 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="92" y="92" width="1182" height="554" key="dock-window-1/0.0.1366.738@0.0.1366.738" timestamp="1631183035018" />
-    <state x="379" y="101" width="737" height="606" key="find.popup" timestamp="1632376022493">
+    <state x="379" y="101" width="737" height="606" key="find.popup" timestamp="1632490750862">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="379" y="101" width="737" height="606" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1632376022493" />
+    <state x="379" y="101" width="737" height="606" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1632490750862" />
     <state x="413" y="160" key="git4idea.merge.GitPullDialog" timestamp="1632460832692">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="413" y="160" key="git4idea.merge.GitPullDialog/0.0.1366.738@0.0.1366.738" timestamp="1632460832692" />
-    <state x="339" y="165" key="run.anything.popup" timestamp="1632399023141">
+    <state x="339" y="165" key="run.anything.popup" timestamp="1632730285513">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1632399023141" />
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1632218399475">
+    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1632730285513" />
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1632735554303">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1632218399475" />
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1632735554303" />
   </component>
 </project>
