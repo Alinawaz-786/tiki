@@ -2,23 +2,274 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="549420ee-bbe2-47fe-9413-c935c01c6886" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/contracts/AnnexFixedSwap.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/Governable.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/IAnnexStake.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/IterableMapping.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/address-utils.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/demo-nft.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/erc165.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/erc721-metadata.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/erc721-token-receiver.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/erc721.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/newNFT.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/newNFT_flat.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/nf-token-metadata.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/nf-token.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/supports-interface.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nft_backup.rar" beforeDir="false" afterPath="$PROJECT_DIR$/nft_backup.rar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/pizaaNFT_flat.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/pizaaNFT_flat.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/access/AccessControl.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/access/AccessControlEnumerable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/access/IAccessControl.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/access/IAccessControlEnumerable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/access/Ownable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/AccessControl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/AccessControlEnumerable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Address.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Arrays.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/BeaconProxy.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/BitMaps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Clones.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ConditionalEscrow.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Context.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Counters.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Create2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ECDSA.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/EIP712.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1155.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1155Burnable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1155Holder.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1155Pausable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1155PresetMinterPauser.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1155Receiver.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1155Supply.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC165.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC165Checker.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC165Storage.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1820Implementer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1967Proxy.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC1967Upgrade.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20Burnable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20Capped.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20FlashMint.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20Pausable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20Permit.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20PresetFixedSupply.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20PresetMinterPauser.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20Snapshot.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20Votes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20VotesComp.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC20Wrapper.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC2771Context.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC721.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC721Burnable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC721Enumerable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC721Holder.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC721Pausable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC721PresetMinterPauserAutoId.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC721URIStorage.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC777.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ERC777PresetFixedSupply.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/EnumerableMap.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/EnumerableSet.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Escrow.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Governor.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorCompatibilityBravo.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorCountingSimple.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorProposalThreshold.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorTimelockCompound.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorTimelockControl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorVotes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorVotesComp.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/GovernorVotesQuorumFraction.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IAccessControl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IAccessControlEnumerable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IBeacon.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ICompoundTimelock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1155.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1155MetadataURI.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1155Receiver.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1271.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1363.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1363Receiver.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1363Spender.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC165.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1820Implementer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC1820Registry.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC20.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC20Metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC20Permit.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC2612.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC2981.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC3156FlashBorrower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC3156FlashLender.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC721.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC721Enumerable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC721Metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC721Receiver.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC777.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC777Recipient.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IERC777Sender.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IGovernor.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IGovernorCompatibilityBravo.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/IGovernorTimelock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Initializable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Math.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/MerkleProof.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/MinimalForwarder.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Multicall.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Ownable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Pausable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/PaymentSplitter.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Proxy.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ProxyAdmin.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/PullPayment.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/ReentrancyGuard.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/RefundEscrow.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/SafeCast.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/SafeERC20.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/SafeMath.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/SignatureChecker.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/SignedSafeMath.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/StorageSlot.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Strings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/TimelockController.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/Timers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/TokenTimelock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/TransparentUpgradeableProxy.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/UUPSUpgradeable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/build/contracts/UpgradeableBeacon.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/finance/PaymentSplitter.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/Governor.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/IGovernor.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/TimelockController.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/compatibility/GovernorCompatibilityBravo.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/compatibility/IGovernorCompatibilityBravo.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/GovernorProposalThreshold.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/GovernorTimelockCompound.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/GovernorVotes.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/GovernorVotesComp.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/governance/extensions/IGovernorTimelock.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1155.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1155MetadataURI.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1155Receiver.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1271.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1363.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1363Receiver.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1363Spender.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC165.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1820Implementer.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC1820Registry.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC20.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC20Metadata.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC2981.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC3156.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC721.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC721Enumerable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC721Metadata.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC721Receiver.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC777.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC777Recipient.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/IERC777Sender.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/interfaces/draft-IERC2612.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/metatx/ERC2771Context.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/metatx/MinimalForwarder.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/Clones.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/Proxy.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/beacon/IBeacon.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/utils/Initializable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/security/Pausable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/security/PullPayment.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/security/ReentrancyGuard.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/ERC1155.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/IERC1155.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/ERC20.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/IERC20.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesComp.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/ERC20Wrapper.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC20/utils/TokenTimelock.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/ERC721.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/IERC721.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/presets/ERC721PresetMinterPauserAutoId.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC777/ERC777.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC777/IERC777.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC777/IERC777Recipient.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC777/IERC777Sender.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/token/ERC777/presets/ERC777PresetFixedSupply.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Address.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Arrays.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Context.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Counters.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Create2.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Multicall.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/StorageSlot.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Strings.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/Timers.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/cryptography/ECDSA.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/escrow/ConditionalEscrow.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/escrow/Escrow.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/escrow/RefundEscrow.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/introspection/ERC165.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/introspection/ERC165Checker.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/introspection/ERC165Storage.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/introspection/ERC1820Implementer.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/introspection/IERC165.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/introspection/IERC1820Implementer.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/math/Math.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/math/SafeCast.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/math/SafeMath.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/math/SignedSafeMath.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/structs/BitMaps.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/structs/EnumerableMap.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/@openzeppelin/contracts/utils/structs/EnumerableSet.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/DividendPayingToken.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/DividendPayingTokenInterface.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/DividendPayingTokenOptionalInterface.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/Greeter.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/IUniswapV2Factory.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/IUniswapV2Pair.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/IUniswapV2Router.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/IterableMapping.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/SafeMathInt.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/SafeMathUint.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/TIKI.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/TIKI_bsc_mainnet.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/Whitelist.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/tiki_one.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiki_contract/tiki_one_10.txt" beforeDir="false" />
     </list>
     <list id="3b0be1af-19da-46a3-ace2-618e685cdd99" name="Revert &quot;NFT Buying and mint 2021 09.21&quot;" comment="Revert &quot;NFT Buying and mint 2021 09.21&quot;&#10;&#10;This reverts commit 1d95e609">
       <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
@@ -88,7 +339,7 @@
       <workItem from="1632114689196" duration="5723000" />
       <workItem from="1632123406307" duration="3892000" />
       <workItem from="1632130484009" duration="65394000" />
-      <workItem from="1632489143006" duration="17264000" />
+      <workItem from="1632489143006" duration="24618000" />
     </task>
     <task id="LOCAL-00001" summary="test after 2021 07.00">
       <created>1631108599250</created>
@@ -174,7 +425,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632465041460</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="NFT Buying and mint 2021 09.27">
+      <created>1632750738901</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1632750738901</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,13 +494,14 @@
     <MESSAGE value="NFT Buying and mint 2021 09.22" />
     <MESSAGE value="NFT Buying and mint 2021 09.23" />
     <MESSAGE value="NFT Buying and mint 2021 09.24" />
-    <option name="LAST_COMMIT_MESSAGE" value="NFT Buying and mint 2021 09.24" />
+    <MESSAGE value="NFT Buying and mint 2021 09.27" />
+    <option name="LAST_COMMIT_MESSAGE" value="NFT Buying and mint 2021 09.27" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1632465040075">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1632750736950">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1632465040075" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1632750736950" />
     <state x="92" y="92" width="1182" height="554" maximized="true" key="DiffContextDialog" timestamp="1632232818680">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -267,10 +526,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="404" y="110" width="540" height="524" key="StructurePopup/0.0.1366.738@0.0.1366.738" timestamp="1632394137565" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1632465054360">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1632750744350">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1632465054360" />
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1632750744350" />
     <state x="379" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1632489142642">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
