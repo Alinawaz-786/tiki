@@ -808,7 +808,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable {
         Emmental,
         Cheddar
     }
-      enum _meats{
+    enum _meats {
         Pork,
         Beef,
         Lamb,
@@ -817,7 +817,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable {
         Duck,
         Rabbit
     }
-    enum _toppings{
+    enum _toppings {
         Pepperoni,
         Mushroom,
         Extra_cheese,
@@ -843,6 +843,29 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable {
 
     constructor() ERC721("Pizza Bake", "PNFT") {}
 
+    //this is new section about purchase INGREDIENTS
+    using Counters for Counters.Counter;
+    Counters.Counter private _itemIds;
+    Counters.Counter private _itemsSold;
+
+    struct pizzaIngredients {
+        uint256 itemId;
+        // address nftContract;
+        string[]  IngredientURI;
+        address payable seller;
+        address payable owner;
+        uint256 price;
+    }
+    mapping(uint256 => pizzaIngredients) private idToPizzaIngredients;
+
+    event pizzaIngredientsCreated(
+        uint256 indexed itemId,
+        string[]  IngredientURI,
+        address seller,
+        address owner,
+        uint256 price
+    );
+
     function _burn(uint256 tokenId)
         internal
         override(ERC721, ERC721URIStorage)
@@ -864,116 +887,52 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable {
         onlyOwner
     {
         for (uint256 i = 0; ingredientImages.length > i; i++) {
-            purchaseIngrediented.push(ingredientImages[i]);         //push images
-            _totalpizza = _totalpizza + _perIngredients;            //sum of all ingredients.
+            purchaseIngrediented.push(ingredientImages[i]); //push images
+            _totalpizza = _totalpizza + _perIngredients; //sum of all ingredients.
         }
         pizzaIpfs[msg.sender] = purchaseIngrediented;
     }
     using SafeMath for uint256;
 
-    uint256 constant dnaDigits = 10;
-    uint256 constant dnaModulus = 10 ** dnaDigits;
-    bytes4 private constant _ERC721_RECEIVED = 0x150b7a02;
-
-    struct Pizza {
-        string name;
-        uint256 dna;
-    }
-    Pizza[] public pizzas;
-    mapping(uint256 => address) public pizzaToOwner;
-    mapping(address => uint256) public ownerPizzaCount;
-    mapping(uint256 => address) pizzaApprovals;
-
-    mapping(address => mapping(address => bool)) private operatorApprovals;
-
-    function _createPizza(string memory _name, uint256 _dna)
-    
-        internal
-    
-        isUnique(_name, _dna)
-    {
-        uint256 id = SafeMath.sub(pizzas.push(Pizza(_name, _dna)), 1);
-        assert(pizzaToOwner[id] == address(0));
-
-        pizzaToOwner[id] = msg.sender;
-        ownerPizzaCount[msg.sender] = SafeMath.add(
-            ownerPizzaCount[msg.sender],
-            1
-        );
-    }
-    function createRandomPizza(string memory _name) public {
-        uint256 randDna = generateRandomDna(_name, msg.sender);
-        _createPizza(_name, randDna);
-    }
-    function generateRandomDna(string memory _str, address _owner)
-        public
-        pure
-        returns (uint256)
-    {
-        uint256 rand = uint256(keccak256(abi.encodePacked(_str))) +
-            uint256(_owner);
-        rand = rand % dnaModulus;
-        return rand;
-    }
-    function getPizzasByOwner(address _owner)
+    function getPizzaIngredients(uint256 ingrdientId)
         public
         view
-        returns (uint256[] memory)
+        returns (pizzaIngredients memory)
     {
-        uint256[] memory result = new uint256[](ownerPizzaCount[_owner]);
-        uint256 counter = 0;
-        for (uint256 i = 0; i < pizzas.length; i++) {
-            if (pizzaToOwner[i] == _owner) {
-                result[counter] = i;
-                counter++;
-            }
-        }
-        return result;
+        return idToPizzaIngredients[ingrdientId];
     }
-    function _clearApproval(address owner, uint256 _pizzaId) private {
-        require(pizzaToOwner[_pizzaId] == owner, "Must be pizza owner.");
-        require(_exists(_pizzaId), "Pizza does not exist.");
-        if (pizzaApprovals[_pizzaId] != address(0)) {
-            pizzaApprovals[_pizzaId] = address(0);
-        }
-    }
-   
-    modifier isUnique(string memory _name, uint256 _dna) {
-        bool result = true;
-        for (uint256 i = 0; i < pizzas.length; i++) {
-            if (
-                keccak256(abi.encodePacked(pizzas[i].name)) ==
-                keccak256(abi.encodePacked(_name)) &&
-                pizzas[i].dna == _dna
-            ) {
-                result = false;
-            }
-        }
-        require(result, "Pizza with such name already exists.");
-        _;
-    }
-    function isContract(address account) internal view returns (bool) {
-        uint256 size;
-        assembly {
-            size := extcodesize(account)
-        }
-        return size > 0;
-    }
-    
-    function _mintPizzaIngredients(string memory sauce) public returns (uint256) {
 
+    function createPizzaIngretients(address wallet_address, string[] memory tokenURI) public  {
+
+        _itemIds.increment();
+        uint256 itemId = _itemIds.current();
+
+        idToPizzaIngredients[itemId] = pizzaIngredients(
+            itemId,
+            tokenURI,
+            payable(msg.sender),
+            payable(address(0)),
+            _perIngredients
+        );
+
+        // IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
+
+        emit pizzaIngredientsCreated(
+            itemId,
+            tokenURI,
+            msg.sender,
+            address(0),
+            _perIngredients
+        );
     }
+    //end
 }
-//owner.
-//Customers.
-//      I h shop pizza
-// 1)   select item (ingredients) _minte _picture in array
 // 	    Smart Contracts
 // 	    Smart contracts for all the ingredients will be created.
 // 1) 	BUY INGREDIENTS
 // o 	Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw
 // 	    ingredients’ in the image files, that then become baked ingredients if
-// 	    baked into a pizza)---> _mint
+// 	    baked into a pizza)---> _mint (one --> by --> one )
 // 2) 	BAKE
 // o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of
 // 	    0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of
