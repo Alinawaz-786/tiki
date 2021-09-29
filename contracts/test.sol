@@ -921,6 +921,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable {
     }
 
     function buyingPizza(
+        string memory bakedPizzaTokenURI,
         uint256 ingredientItemId,
         _Sauce sauce,
         _Cheese cheese,
@@ -928,14 +929,18 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable {
         _Toppings toppings
     ) public returns (uint256) {
         _buyPizzaIds.increment();
-        uint256 buyID = _buyPizzaIds.current();
+        uint256 bakedTokenID = _buyPizzaIds.current();
+        require(!_exists(bakedTokenID));
+        require(!tokenURIExists[bakedPizzaTokenURI]);
+        _mint(wallet_address, bakedTokenID);
+        _setTokenURI(bakedTokenID, bakedPizzaTokenURI);
         pizzaIngredients memory _ingredientItem = idToPizzaIngredients[ingredientItemId];
         _sauce = sauce;
         _cheese = cheese;
         _meats = meats;
         _toppings = toppings;
         pizzabuying memory newbuyingPizza = pizzabuying(
-            buyID,
+            bakedTokenID,
             msg.sender,
             _sauce,
             _cheese,
@@ -944,12 +949,29 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable {
             _ingredientItem.price
         );
         idToBuyingPizza[msg.sender] = newbuyingPizza;
-        _transfer(0x25eb1e647261C7DbE696536572De61b1a302a83C, msg.sender, buyID);
-        _transfer(_ingredientItem.owner, msg.sender, buyID);
+        _transfer(_ingredientItem.owner, msg.sender, bakedTokenID);
         // IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
-        // address payable sendTo = _ingredientItem.owner;
-        // sendTo.transfer(_ingredientItem.price);
+         address payable sendTo = _ingredientItem.owner;
+         sendTo.transfer(_ingredientItem.price);
         _ingredientItem.pizzaOwner = payable(msg.sender);
-        return buyID;
+        return bakedTokenID;
+    }
+    function reBake(address pizzaBuyerAddress,
+        _Sauce sauce,
+        _Cheese cheese,
+        _Meats meats,
+        _Toppings toppings) public {
+        require(msg.sender != address(0));
+        pizzabuying memory _buyingPizzaItem = idToBuyingPizza[pizzaBuyerAddress];
+        _sauce = sauce;
+        _cheese = cheese;
+        _meats = meats;
+        _toppings = toppings;
+
+        _buyingPizzaItem._buysauce = _sauce;
+        _buyingPizzaItem._buyCheese = _cheese;
+        _buyingPizzaItem._buymeats = _meats;
+        _buyingPizzaItem._buytoppings = _toppings;
+        idToBuyingPizza[pizzaBuyerAddress] = _buyingPizzaItem;
     }
 }

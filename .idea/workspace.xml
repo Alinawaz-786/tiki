@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="549420ee-bbe2-47fe-9413-c935c01c6886" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
-    <list id="3b0be1af-19da-46a3-ace2-618e685cdd99" name="Revert &quot;NFT Buying and mint 2021 09.21&quot;" comment="Revert &quot;NFT Buying and mint 2021 09.21&quot;&#10;&#10;This reverts commit 1d95e609">
-      <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/deploy.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/deploy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/pizaaNFT_flat.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/pizaaNFT_flat.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/test.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/test.sol" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,13 +295,13 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="413" y="160" key="git4idea.merge.GitPullDialog/0.0.1366.738@0.0.1366.738" timestamp="1632460832692" />
-    <state x="339" y="165" key="run.anything.popup" timestamp="1632897361111">
+    <state x="339" y="165" key="run.anything.popup" timestamp="1632941274340">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1632897361111" />
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1632735554303">
+    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1632941274340" />
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup" timestamp="1632938196810">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1632735554303" />
+    <state x="339" y="22" width="672" height="676" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1632938196810" />
   </component>
 </project>
