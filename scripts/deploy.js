@@ -3,14 +3,16 @@ const hre = require("hardhat");
 
 async function main() {
 
- /*   const tiki_tokens = await ethers.getContractFactory("TIKI");
-    const ngt = await tiki_tokens.deploy();
-    console.log("Tiki Tokens deployed to:", ngt.address);*/
 
+    const Pizza = await hre.ethers.getContractFactory("pizzaNFT");
+    const greeter = await Pizza.deploy();
+    await greeter.deployed();
+    console.log("Pizza deployed to:", greeter.address);
 
-    const tiki_tokens = await ethers.getContractFactory("newNFT");
-    const ngt = await tiki_tokens.deploy();
-    console.log("NFT Tokens deployed to:", ngt.address);
+    // const tiki_tokens = await ethers.getContractFactory("SousChef");
+    // // const ngt = await tiki_tokens.deploy();
+    // const ngt = await tiki_tokens.deploy("0x050b5E53d1449B711c6f48aAD213C3bf56C597D9","100000000000000000",10951000,10991000);
+    // console.log("Tiki Tokens deployed to:", ngt.address);
 
 
 /*    const Greeter = await hre.ethers.getContractFactory("Greeter");
