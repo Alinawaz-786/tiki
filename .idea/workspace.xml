@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="549420ee-bbe2-47fe-9413-c935c01c6886" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/contracts/Home-2.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/Home.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/pizza-NFT-mint.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/Home-2.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/Home-2.sol" afterDir="false" />
     </list>
     <list id="3b0be1af-19da-46a3-ace2-618e685cdd99" name="Revert &quot;NFT Buying and mint 2021 09.21&quot;" comment="Revert &quot;NFT Buying and mint 2021 09.21&quot;&#10;&#10;This reverts commit 1d95e609" />
     <option name="SHOW_DIALOG" value="false" />
@@ -227,6 +225,11 @@
                 </map>
               </option>
             </State>
+          </value>
+        </entry>
+        <entry key="2">
+          <value>
+            <State />
           </value>
         </entry>
       </map>

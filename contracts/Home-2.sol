@@ -948,7 +948,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory meats,
         string memory toppings,
         uint256 totalprice
-    ) public {
+    ) public payable {
 
           for (uint256 i = 0; ingredientTokenURI.length > i; i++) {
             _IngredientItemIds.increment();
@@ -966,8 +966,8 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         }
 
 
-    uint256 minteID =   _mintBakedPizza(_bakedPizzaTokenURI, base ,sauce, cheese, meats, toppings, totalprice);
-    buyPizzaConformed(minteID);
+    uint256 _minteID =   _mintBakedPizza(_bakedPizzaTokenURI, base ,sauce, cheese, meats, toppings, totalprice);
+    buyPizzaConformed(_minteID);
     }
     /*
     4) 	REBAKE
@@ -1026,7 +1026,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 /* 
     Final link
     
-    https://rinkeby.etherscan.io/address/0xc5397258d5a232632c86Bc0A93c4b038f31eAb4d#writeContract
+    https://rinkeby.etherscan.io/address/0x7e4D0841534B135298df2cf9C2cD391B2D34678F#writeContract
 
  */
 
