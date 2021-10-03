@@ -892,16 +892,16 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         ingredientItemId
         ];
         pizzabuying memory newbuyingPizza = pizzabuying(
-        bakedTokenID,
-        msg.sender,
-        sauce,
-        cheese,
-        meats,
-        toppings,
-        _ingredientItem.price,
-        false,
-        false,
-        false,
+            bakedTokenID,
+            msg.sender,
+            sauce,
+            cheese,
+            meats,
+            toppings,
+            _ingredientItem.price,
+            false,
+            false,
+            false,
         );
         idToBuyingPizza[bakedTokenID] = newbuyingPizza;
         // plese check token in replace of  address
@@ -958,7 +958,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory meats,
         string memory toppings
     ) public {
-
+       
         require(msg.sender != address(0));
         pizzabuying memory _buyingPizzaItem = idToBuyingPizza[
         _bakedtokenID
@@ -998,28 +998,28 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 // 	Smart contracts for all the ingredients will be created.
 
 // 1) 	BUY INGREDIENTS
-// o 	Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw
+// o 	Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw 
 // 	ingredients’ in the image files, that then become baked ingredients if
 // 	baked into a pizza)
 // 2) 	BAKE
-// o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of
-// 	0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of
-// 	meats (0-8), any combination of toppings (0-8). Ingredients, when baked, change to
+// o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of 
+// 	0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of 
+// 	meats (0-8), any combination of toppings (0-8). Ingredients, when baked, change to 
 // 	a new baked image on the pizza NFT.
 // 3) 	BUY & BAKE
-// o 	Purchase ingredients & bake pizza in one transaction (= cost of ingredients @
-// 	0.01ETH + cost of baking @ 0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1
+// o 	Purchase ingredients & bake pizza in one transaction (= cost of ingredients @ 
+// 	0.01ETH + cost of baking @ 0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 
 // 	cheese, any combination of meats (0-8), any combination of toppings (0-8))
 // 4) 	REBAKE
-// o 	Allows user to make changes to an existing pizza in their wallet by adding
-// 	ingredients they hold and/or removing (and burning) ingredients that are on the
+// o 	Allows user to make changes to an existing pizza in their wallet by adding 
+// 	ingredients they hold and/or removing (and burning) ingredients that are on the 
 // 	existing pizza. Same pizza parameters as above apply to this function.
 //  	RANDOM BAKE
-// o 	Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any
-// 	combination of meats, any combination of toppings, all completed in one
+// o 	Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any 
+// 	combination of meats, any combination of toppings, all completed in one 
 // 	transaction and randomized using Chain-link oracle for cost of 0.05 ETH
 // 5) 	UNBAKE
-// 	o Disassembles an existing pizza into its constituent NFT ingredient parts for a cost of
+// 	o Disassembles an existing pizza into its constituent NFT ingredient parts for a cost of 
 // 	0.05ETH. Baked ingredients, when unbaked, revert to the raw ingredient image NFT.
 // 6) 	CLAIM
 // o 	Allows users to claim any rewards they may be entitled to

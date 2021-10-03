@@ -784,21 +784,20 @@ library SafeMath {
 
 contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
-    uint256 _perIngredients = (0.01 * 10 ** 18); //INGREDIENTS price constant.
-    Counters.Counter private _itemIds;
+    Counters.Counter private _IngredientItemIds;
     Counters.Counter private _buyPizzaIds;
-    uint256 _totalpizza;
 
-    struct pizzaIngredients {
-        uint256 itemId;
-        string[] IngredientURI;
-        address payable seller;
+    struct Ingredients {
+        uint256 _ingredientId;
+        string name;
+        uint256 qty;
         uint256 price;
     }
 
     struct pizzabuying {
         uint256 buyingID;
         address owner;
+        string _buybase;
         string _buysauce;
         string _buyCheese;
         string _buymeats;
@@ -809,15 +808,10 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         bool _isDisassembles;
     }
 
-    event pizzaIngredientsCreated(
-        uint256 indexed itemId,
-        string[] IngredientURI,
-        address seller,
-        uint256 price
-    );
-
-    mapping(uint256 => pizzaIngredients) public idToPizzaIngredients;
+    mapping(uint256 => Ingredients) public idToPizzaIngredients;
+    // mapping(string => bool) public ingredientTokenURIExists; 
     mapping(uint256 => pizzabuying) public idToBuyingPizza;
+    //(After if required then add uncomment ingredient check)
     constructor() ERC721("Pizza Bake", "PNFT") {}
     function _burn(uint256 tokenId)
     internal
@@ -835,80 +829,90 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         return super.tokenURI(tokenId);
     }
 
-    function createPizzaIngretients(
-        address payable wallet_address,
-        string[] memory tokenURI
-    ) public returns (bool success) {
-        _itemIds.increment();
-        uint256 itemId = _itemIds.current();
-        for (uint256 i = 0; tokenURI.length > i; i++) {
-            _totalpizza = _totalpizza + _perIngredients;
-        }
-        pizzaIngredients memory newPizzaIngredients = pizzaIngredients(
-            itemId,
-            tokenURI,
-            wallet_address,
-            _totalpizza
-        );
-        idToPizzaIngredients[itemId] = newPizzaIngredients;
-        emit pizzaIngredientsCreated(itemId, tokenURI, msg.sender, _totalpizza);
-        return true;
-    }
-    //test
-    //Purchase individual ingredients @ 0.01ETH per ingredient
+    /* 
+        Requirement 
+        BUY INGREDIENTS
+        Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw 
+        ingredients’ in the image files, that then become baked ingredients if
+        baked into a pizza)
+    */
+    //these are _mint for common "users  Side"
+    //Good
     function _mintPizzaIngretients(
-        address wallet_address,
-        string[] memory tokenURI
-    ) public returns (bool success) {
-        _itemIds.increment();
-        uint256 itemId = _itemIds.current();
-        for (uint256 i = 0; tokenURI.length > i; i++) {
-            _itemIds.increment();
-            uint256 ingredientItemId = _itemIds.current();
-            require(!_exists(ingredientItemId));
-            _mint(wallet_address, ingredientItemId);
-            _setTokenURI(ingredientItemId, tokenURI[i]);
-            _totalpizza = _totalpizza + _perIngredients;
-        }
-        //need here array mapping look after that
-        return true;
+        string memory ingredientTokenURI,
+        string memory name,
+        uint256 qty,
+        uint256 price
+    ) public returns (uint256) {
+        _IngredientItemIds.increment();
+        uint256 _ingredientId = _IngredientItemIds.current();
+        require(!_exists(_ingredientId));
+        // require(!ingredientTokenURIExists[ingredientTokenURI]);
+        _mint(owner(), _ingredientId);
+        //ipfs mint by ower of smart contract
+        _setTokenURI(_ingredientId, ingredientTokenURI);
+        // ingredientTokenURIExists[ingredientTokenURI] = true;
+        Ingredients memory ingredientDetail = Ingredients(
+            _ingredientId,
+            name,
+            qty,
+            price
+        );
+        idToPizzaIngredients[_ingredientId] = ingredientDetail;
+        return _ingredientId;
     }
-    //  (Good)
-    function buyingPizza(
-        string memory bakedPizzaTokenURI,
-        uint256 ingredientItemId,
-        address wallet_address,
+
+    /*
+    2) 	BAKE
+    o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of
+        0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of
+        meats (0-8), any combination of toppings (0-8). Ingredients, when baked, change to
+        a new baked image on the pizza NFT.
+     */
+
+    //Good
+    function _mintBakedPizza(
+        string memory _bakedPizzaTokenURI,
+        string memory base,
         string memory sauce,
         string memory cheese,
         string memory meats,
-        string memory toppings
-    ) public returns (uint256) {
+        string memory toppings,
+        uint256 price
+
+    ) public returns (uint256){
+        /*
+        one address have not same id in bockchain
+        Due this use Common token all place
+
         _buyPizzaIds.increment();
-        uint256 bakedTokenID = _buyPizzaIds.current();
+        uint256 bakedTokenID = _buyPizzaIds.current(); 
         require(!_exists(bakedTokenID));
-        _mint(wallet_address, bakedTokenID);
-        _setTokenURI(bakedTokenID, bakedPizzaTokenURI);
-        pizzaIngredients memory _ingredientItem = idToPizzaIngredients[
-        ingredientItemId
-        ];
+        
+        */
+        _IngredientItemIds.increment();
+        uint256 _ingredientId = _IngredientItemIds.current();
+        require(!_exists(_ingredientId));
+        _mint(owner(), _ingredientId);
+        _setTokenURI(_ingredientId, _bakedPizzaTokenURI);
         pizzabuying memory newbuyingPizza = pizzabuying(
-        bakedTokenID,
+        _ingredientId,
         msg.sender,
+        base,
         sauce,
         cheese,
         meats,
         toppings,
-        _ingredientItem.price,
+        price,
         false,
         false,
-        false,
+        false
         );
-        idToBuyingPizza[bakedTokenID] = newbuyingPizza;
-        // plese check token in replace of  address
-        return bakedTokenID;
+        idToBuyingPizza[_ingredientId] = newbuyingPizza;
+        return _ingredientId;
     }
-
-    function buyPizzaConformed(uint256 _tokenId, address buyerAddress)
+    //    (testing)
+    function buyPizzaConformed(uint256 _tokenId)
     public
     payable
     {
@@ -918,109 +922,118 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         require(tokenOwner != address(0));
         require(tokenOwner != msg.sender);
         pizzabuying memory _pizzaID = idToBuyingPizza[_tokenId];
-        require(_pizzaID.totalprice == msg.value);
-        require(_pizzaID.isConformed == false);
-        require(_pizzaID._isDisassembles == false);
+        // require(_pizzaID.totalprice == msg.value);
+        // require(_pizzaID.isConformed == false);
         _transfer(tokenOwner, msg.sender, _tokenId);
         payable(tokenOwner).transfer(msg.value);
         _pizzaID.isConformed = true;
-        _pizzaID._isDisassembles = true;
         idToBuyingPizza[_tokenId] = _pizzaID;
-
     }
+    /*
+    BUY & BAKE
+    Purchase ingredients & bake pizza in one transaction (= cost of ingredients @
+    0.01ETH + cost of baking @ 0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1
+    cheese, any combination of meats (0-8), any combination of toppings (0-8))
+    */
 
     function buyBake(
-        address payable wallet_address,
-        string[] memory tokenURI,
-        string memory bakedPizzaTokenURI,
-        uint256 ingredientItemId,
+        string[] memory ingredientTokenURI,
+        string[] memory name,
+        uint[] memory qty,
+        uint[] memory price,
+        string memory _bakedPizzaTokenURI,
+        string memory base,
         string memory sauce,
         string memory cheese,
         string memory meats,
-        string memory toppings
+        string memory toppings,
+        uint256 totalprice
     ) public {
-        createPizzaIngretients(wallet_address, tokenURI);
-        buyingPizza(
-            bakedPizzaTokenURI,
-            ingredientItemId,
-            wallet_address,
-            sauce,
-            cheese,
-            meats,
-            toppings
-        );
+
+          for (uint256 i = 0; ingredientTokenURI.length > i; i++) {
+            _IngredientItemIds.increment();
+            uint256 _ingredientId = _IngredientItemIds.current();
+            require(!_exists(_ingredientId));
+            _mint(owner(), _ingredientId);
+            _setTokenURI(_ingredientId, ingredientTokenURI[i]);
+            Ingredients memory ingredientDetail = Ingredients(
+                _ingredientId,
+                name[i],
+                qty[i],
+                price[i]
+            );
+            idToPizzaIngredients[_ingredientId] = ingredientDetail;
+        }
+
+
+    uint256 minteID =   _mintBakedPizza(_bakedPizzaTokenURI, base ,sauce, cheese, meats, toppings, totalprice);
+    buyPizzaConformed(minteID);
     }
-
+    /*
+    4) 	REBAKE
+        Allows user to make changes to an existing pizza in their wallet by adding
+        ingredients they hold and/or removing (and burning) ingredients that are on the
+        existing pizza. Same pizza parameters as above apply to this function.
+        */
+        //Good
     function reBake(
-        uint256 _bakedtokenID,
+        uint256 tokenId,
+        string memory base,
         string memory sauce,
         string memory cheese,
         string memory meats,
         string memory toppings
     ) public {
-
+        //Please check
+        /// Will Work on Remove ingredient
         require(msg.sender != address(0));
         pizzabuying memory _buyingPizzaItem = idToBuyingPizza[
-        _bakedtokenID
+        tokenId
         ];
         require(_buyingPizzaItem.isConformed == false);
         require(_buyingPizzaItem._isDisassembles == false);
+        _buyingPizzaItem._buybase = base;
         _buyingPizzaItem._buysauce = sauce;
         _buyingPizzaItem._buyCheese = cheese;
         _buyingPizzaItem._buymeats = meats;
         _buyingPizzaItem._buytoppings = toppings;
-        idToBuyingPizza[_bakedtokenID] = _buyingPizzaItem;
+        idToBuyingPizza[tokenId] = _buyingPizzaItem;
     }
+    /*
+    5) 	UNBAKE
+    Disassembles an existing pizza into its constituent NFT ingredient parts for
+    a cost of 0.05ETH. Baked ingredients, when unbaked, revert to the raw
+    ingredient image NFT.
+     */
     function unBake(
-        uint256 _bakedtokenID
+        uint256 tokenId
     ) public {
         require(msg.sender != address(0));
         pizzabuying memory _buyingPizzaItem = idToBuyingPizza[
-        _bakedtokenID
+        tokenId
         ];
         require(_buyingPizzaItem.isConformed == false);
         _buyingPizzaItem._isDisassembles = true;
-        idToBuyingPizza[_bakedtokenID] = _buyingPizzaItem;
+        idToBuyingPizza[tokenId] = _buyingPizzaItem;
     }
-    //     RANDOM BAKE
-    // o 	Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any
-    // 	    combination of meats, any combination of toppings, all completed in one
-    // 	    transaction and randomized using Chain-link oracle for cost of 0.05 ETH
-    //      https://docs.chain.link/docs/intermediates-tutorial/
-    //      https://github.com/kuldeep23907/Cryptocurrency-Price-Prediction-Market/blob/main/contracts/PriceAPI.sol
-    //      https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD
-    //      https://github.com/Elisik/ETHUSD-Price-Oracle
+
+    function getValue(uint256 val) public
+    payable  returns(uint256){
+        return msg.value;
+    }
 }
 
+/* 
+    Final link
+    
+    https://rinkeby.etherscan.io/address/0xc5397258d5a232632c86Bc0A93c4b038f31eAb4d#writeContract
 
+ */
 
-// 	Smart Contracts
-// 	Smart contracts for all the ingredients will be created.
-
-// 1) 	BUY INGREDIENTS
-// o 	Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw
-// 	ingredients’ in the image files, that then become baked ingredients if
-// 	baked into a pizza)
-// 2) 	BAKE
-// o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of
-// 	0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of
-// 	meats (0-8), any combination of toppings (0-8). Ingredients, when baked, change to
-// 	a new baked image on the pizza NFT.
-// 3) 	BUY & BAKE
-// o 	Purchase ingredients & bake pizza in one transaction (= cost of ingredients @
-// 	0.01ETH + cost of baking @ 0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1
-// 	cheese, any combination of meats (0-8), any combination of toppings (0-8))
-// 4) 	REBAKE
-// o 	Allows user to make changes to an existing pizza in their wallet by adding
-// 	ingredients they hold and/or removing (and burning) ingredients that are on the
-// 	existing pizza. Same pizza parameters as above apply to this function.
 //  	RANDOM BAKE
-// o 	Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any
-// 	combination of meats, any combination of toppings, all completed in one
+// o 	Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any 
+// 	combination of meats, any combination of toppings, all completed in one 
 // 	transaction and randomized using Chain-link oracle for cost of 0.05 ETH
-// 5) 	UNBAKE
-// 	o Disassembles an existing pizza into its constituent NFT ingredient parts for a cost of
-// 	0.05ETH. Baked ingredients, when unbaked, revert to the raw ingredient image NFT.
 // 6) 	CLAIM
 // o 	Allows users to claim any rewards they may be entitled to
 //  	Gas fees for all UI smart contract interactions to be paid by user.
