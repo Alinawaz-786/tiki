@@ -1025,7 +1025,8 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 
 /*
     Final link
-
+    Deploy and verify Smart Contract Link
+    https://rinkeby.etherscan.io/address/0x7e4D0841534B135298df2cf9C2cD391B2D34678F#writeContract
  */
 
 //  	RANDOM BAKE
