@@ -2,6 +2,168 @@
 pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
+interface LinkTokenInterface {
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint256 remaining);
+
+    function approve(address spender, uint256 value)
+        external
+        returns (bool success);
+
+    function balanceOf(address owner) external view returns (uint256 balance);
+
+    function decimals() external view returns (uint8 decimalPlaces);
+
+    function decreaseApproval(address spender, uint256 addedValue)
+        external
+        returns (bool success);
+
+    function increaseApproval(address spender, uint256 subtractedValue)
+        external;
+
+    function name() external view returns (string memory tokenName);
+
+    function symbol() external view returns (string memory tokenSymbol);
+
+    function totalSupply() external view returns (uint256 totalTokensIssued);
+
+    function transfer(address to, uint256 value)
+        external
+        returns (bool success);
+
+    function transferAndCall(
+        address to,
+        uint256 value,
+        bytes calldata data
+    ) external returns (bool success);
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 value
+    ) external returns (bool success);
+}
+
+contract VRFRequestIDBase {
+    function makeVRFInputSeed(
+        bytes32 _keyHash,
+        uint256 _userSeed,
+        address _requester,
+        uint256 _nonce
+    ) internal pure returns (uint256) {
+        return
+            uint256(
+                keccak256(abi.encode(_keyHash, _userSeed, _requester, _nonce))
+            );
+    }
+
+    function makeRequestId(bytes32 _keyHash, uint256 _vRFInputSeed)
+        internal
+        pure
+        returns (bytes32)
+    {
+        return keccak256(abi.encodePacked(_keyHash, _vRFInputSeed));
+    }
+}
+
+abstract contract VRFConsumerBase is VRFRequestIDBase {
+    function fulfillRandomness(bytes32 requestId, uint256 randomness)
+        internal
+        virtual;
+
+    function requestRandomness(
+        bytes32 _keyHash,
+        uint256 _fee,
+        uint256 _seed
+    ) internal returns (bytes32 requestId) {
+        LINK.transferAndCall(vrfCoordinator, _fee, abi.encode(_keyHash, _seed));
+        uint256 vRFSeed = makeVRFInputSeed(
+            _keyHash,
+            _seed,
+            address(this),
+            nonces[_keyHash]
+        );
+        nonces[_keyHash] = nonces[_keyHash] + 1;
+        return makeRequestId(_keyHash, vRFSeed);
+    }
+
+    LinkTokenInterface internal immutable LINK;
+    address private immutable vrfCoordinator;
+    mapping(bytes32 => uint256) /* keyHash */ /* nonce */
+        private nonces;
+
+    constructor(address _vrfCoordinator, address _link) {
+        vrfCoordinator = _vrfCoordinator;
+        LINK = LinkTokenInterface(_link);
+    }
+
+    function rawFulfillRandomness(bytes32 requestId, uint256 randomness)
+        external
+    {
+        require(
+            msg.sender == vrfCoordinator,
+            "Only VRFCoordinator can fulfill"
+        );
+        fulfillRandomness(requestId, randomness);
+    }
+}
+pragma solidity ^0.8.4;
+
+interface IRandomNumberGenerator {
+    // , uint256 num
+    function getRandomNumber(uint256 _seed)
+        external
+        returns (bytes32);
+
+    function viewRandomResult() external view returns (uint32);
+}
+
+contract RandomNumberConsumer is VRFConsumerBase {
+    bytes32 internal keyHash;
+    uint256 internal fee;
+    uint256 public randomResult;
+
+    constructor()
+        VRFConsumerBase(
+            0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B, // VRF Coordinator
+            0x01BE23585060835E02B77ef475b0Cc51aA1e0709 // LINK Token
+        )
+    {
+        keyHash = 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311;
+        fee = 0.5 * 10**18;
+    }
+
+    uint256  rangeNumber;
+// , uint256 num
+    function getRandomNumber(uint256 _seed)
+        public
+        override
+        returns (bytes32 requestId)
+    {
+        require(
+            LINK.balanceOf(address(this)) >= fee,
+            "Not enough LINK - fill contract with faucet"
+        );
+        // rangeNumber = num;
+        requestRandomness(keyHash, fee, _seed);
+    }
+
+    function fulfillRandomness(bytes32 requestId, uint256 randomness)
+        internal
+        override
+    {
+        if (rangeNumber > 1) {
+            randomResult = (randomness % 5) + 1;
+        }
+    }
+
+    function viewRandomResult() external view override returns (uint32) {
+        return uint32(randomResult);
+    }
+}
+
 interface IERC165 {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
@@ -42,9 +204,9 @@ library Strings {
     }
 
     function toHexString(uint256 value, uint256 length)
-    internal
-    pure
-    returns (string memory)
+        internal
+        pure
+        returns (string memory)
     {
         bytes memory buffer = new bytes(2 * length + 2);
         buffer[0] = "0";
@@ -82,16 +244,16 @@ interface IERC721 is IERC165 {
     function approve(address to, uint256 tokenId) external;
 
     function getApproved(uint256 tokenId)
-    external
-    view
-    returns (address operator);
+        external
+        view
+        returns (address operator);
 
     function setApprovalForAll(address operator, bool _approved) external;
 
     function isApprovedForAll(address owner, address operator)
-    external
-    view
-    returns (bool);
+        external
+        view
+        returns (bool);
 }
 
 interface IERC721Receiver {
@@ -125,7 +287,7 @@ library Address {
             address(this).balance >= amount,
             "Address: insufficient balance"
         );
-        (bool success,) = recipient.call{value : amount}("");
+        (bool success, ) = recipient.call{value: amount}("");
         require(
             success,
             "Address: unable to send value, recipient may have reverted"
@@ -133,8 +295,8 @@ library Address {
     }
 
     function functionCall(address target, bytes memory data)
-    internal
-    returns (bytes memory)
+        internal
+        returns (bytes memory)
     {
         return functionCall(target, data, "Address: low-level call failed");
     }
@@ -153,12 +315,12 @@ library Address {
         uint256 value
     ) internal returns (bytes memory) {
         return
-        functionCallWithValue(
-            target,
-            data,
-            value,
-            "Address: low-level call with value failed"
-        );
+            functionCallWithValue(
+                target,
+                data,
+                value,
+                "Address: low-level call with value failed"
+            );
     }
 
     function functionCallWithValue(
@@ -172,23 +334,23 @@ library Address {
             "Address: insufficient balance for call"
         );
         require(isContract(target), "Address: call to non-contract");
-        (bool success, bytes memory returndata) = target.call{value : value}(
-        data
+        (bool success, bytes memory returndata) = target.call{value: value}(
+            data
         );
         return verifyCallResult(success, returndata, errorMessage);
     }
 
     function functionStaticCall(address target, bytes memory data)
-    internal
-    view
-    returns (bytes memory)
+        internal
+        view
+        returns (bytes memory)
     {
         return
-        functionStaticCall(
-            target,
-            data,
-            "Address: low-level static call failed"
-        );
+            functionStaticCall(
+                target,
+                data,
+                "Address: low-level static call failed"
+            );
     }
 
     function functionStaticCall(
@@ -202,15 +364,15 @@ library Address {
     }
 
     function functionDelegateCall(address target, bytes memory data)
-    internal
-    returns (bytes memory)
+        internal
+        returns (bytes memory)
     {
         return
-        functionDelegateCall(
-            target,
-            data,
-            "Address: low-level delegate call failed"
-        );
+            functionDelegateCall(
+                target,
+                data,
+                "Address: low-level delegate call failed"
+            );
     }
 
     function functionDelegateCall(
@@ -241,7 +403,9 @@ library Address {
             }
         }
     }
-}abstract contract Context {
+}
+
+abstract contract Context {
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
@@ -249,13 +413,15 @@ library Address {
     function _msgData() internal view virtual returns (bytes calldata) {
         return msg.data;
     }
-}abstract contract ERC165 is IERC165 {
+}
+
+abstract contract ERC165 is IERC165 {
     function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override
-    returns (bool)
+        public
+        view
+        virtual
+        override
+        returns (bool)
     {
         return interfaceId == type(IERC165).interfaceId;
     }
@@ -270,28 +436,31 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     mapping(address => uint256) private _balances;
     mapping(uint256 => address) private _tokenApprovals;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
+
     constructor(string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
-    }function supportsInterface(bytes4 interfaceId)
-public
-view
-virtual
-override(ERC165, IERC165)
-returns (bool)
-{
-    return
-    interfaceId == type(IERC721).interfaceId ||
-    interfaceId == type(IERC721Metadata).interfaceId ||
-    super.supportsInterface(interfaceId);
-}
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC165, IERC165)
+        returns (bool)
+    {
+        return
+            interfaceId == type(IERC721).interfaceId ||
+            interfaceId == type(IERC721Metadata).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
 
     function balanceOf(address owner)
-    public
-    view
-    virtual
-    override
-    returns (uint256)
+        public
+        view
+        virtual
+        override
+        returns (uint256)
     {
         require(
             owner != address(0),
@@ -301,11 +470,11 @@ returns (bool)
     }
 
     function ownerOf(uint256 tokenId)
-    public
-    view
-    virtual
-    override
-    returns (address)
+        public
+        view
+        virtual
+        override
+        returns (address)
     {
         address owner = _owners[tokenId];
         require(
@@ -324,11 +493,11 @@ returns (bool)
     }
 
     function tokenURI(uint256 tokenId)
-    public
-    view
-    virtual
-    override
-    returns (string memory)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
     {
         require(
             _exists(tokenId),
@@ -337,9 +506,9 @@ returns (bool)
 
         string memory baseURI = _baseURI();
         return
-        bytes(baseURI).length > 0
-        ? string(abi.encodePacked(baseURI, tokenId.toString()))
-        : "";
+            bytes(baseURI).length > 0
+                ? string(abi.encodePacked(baseURI, tokenId.toString()))
+                : "";
     }
 
     function _baseURI() internal view virtual returns (string memory) {
@@ -357,11 +526,11 @@ returns (bool)
     }
 
     function getApproved(uint256 tokenId)
-    public
-    view
-    virtual
-    override
-    returns (address)
+        public
+        view
+        virtual
+        override
+        returns (address)
     {
         require(
             _exists(tokenId),
@@ -371,9 +540,9 @@ returns (bool)
     }
 
     function setApprovalForAll(address operator, bool approved)
-    public
-    virtual
-    override
+        public
+        virtual
+        override
     {
         require(operator != _msgSender(), "ERC721: approve to caller");
         _operatorApprovals[_msgSender()][operator] = approved;
@@ -381,11 +550,11 @@ returns (bool)
     }
 
     function isApprovedForAll(address owner, address operator)
-    public
-    view
-    virtual
-    override
-    returns (bool)
+        public
+        view
+        virtual
+        override
+        returns (bool)
     {
         return _operatorApprovals[owner][operator];
     }
@@ -442,10 +611,10 @@ returns (bool)
     }
 
     function _isApprovedOrOwner(address spender, uint256 tokenId)
-    internal
-    view
-    virtual
-    returns (bool)
+        internal
+        view
+        virtual
+        returns (bool)
     {
         require(
             _exists(tokenId),
@@ -453,8 +622,8 @@ returns (bool)
         );
         address owner = ERC721.ownerOf(tokenId);
         return (spender == owner ||
-        getApproved(tokenId) == spender ||
-        isApprovedForAll(owner, spender));
+            getApproved(tokenId) == spender ||
+            isApprovedForAll(owner, spender));
     }
 
     function _safeMint(address to, uint256 tokenId) internal virtual {
@@ -521,26 +690,26 @@ returns (bool)
         bytes memory _data
     ) private returns (bool) {
         if (to.isContract()) {
-        try
-        IERC721Receiver(to).onERC721Received(
-        _msgSender(),
-        from,
-        tokenId,
-        _data
-        )
-        returns (bytes4 retval) {
-        return retval == IERC721Receiver.onERC721Received.selector;
-        } catch (bytes memory reason) {
-        if (reason.length == 0) {
-        revert(
-        "ERC721: transfer to non ERC721Receiver implementer"
-        );
-        } else {
-        assembly {
-        revert(add(32, reason), mload(reason))
-        }
-        }
-        }
+            try
+                IERC721Receiver(to).onERC721Received(
+                    _msgSender(),
+                    from,
+                    tokenId,
+                    _data
+                )
+            returns (bytes4 retval) {
+                return retval == IERC721Receiver.onERC721Received.selector;
+            } catch (bytes memory reason) {
+                if (reason.length == 0) {
+                    revert(
+                        "ERC721: transfer to non ERC721Receiver implementer"
+                    );
+                } else {
+                    assembly {
+                        revert(add(32, reason), mload(reason))
+                    }
+                }
+            }
         } else {
             return true;
         }
@@ -551,16 +720,18 @@ returns (bool)
         address to,
         uint256 tokenId
     ) internal virtual {}
-}abstract contract ERC721URIStorage is ERC721 {
+}
+
+abstract contract ERC721URIStorage is ERC721 {
     using Strings for uint256;
     mapping(uint256 => string) private _tokenURIs;
 
     function tokenURI(uint256 tokenId)
-    public
-    view
-    virtual
-    override
-    returns (string memory)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
     {
         require(
             _exists(tokenId),
@@ -578,8 +749,8 @@ returns (bool)
     }
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
-    internal
-    virtual
+        internal
+        virtual
     {
         require(
             _exists(tokenId),
@@ -594,22 +765,30 @@ returns (bool)
             delete _tokenURIs[tokenId];
         }
     }
-}abstract contract Ownable is Context {
+}
+
+abstract contract Ownable is Context {
     address private _owner;
 
     event OwnershipTransferred(
         address indexed previousOwner,
         address indexed newOwner
     );
+
     constructor() {
         _setOwner(_msgSender());
-    }function owner() public view virtual returns (address) {
+    }
+
+    function owner() public view virtual returns (address) {
         return _owner;
     }
+
     modifier onlyOwner() {
         require(owner() == _msgSender(), "Ownable: caller is not the owner");
         _;
-    }function renounceOwnership() public virtual onlyOwner {
+    }
+
+    function renounceOwnership() public virtual onlyOwner {
         _setOwner(address(0));
     }
 
@@ -638,17 +817,17 @@ library Counters {
     }
 
     function increment(Counter storage counter) internal {
-    unchecked {
-    counter._value += 1;
-    }
+        unchecked {
+            counter._value += 1;
+        }
     }
 
     function decrement(Counter storage counter) internal {
         uint256 value = counter._value;
         require(value > 0, "Counter: decrement overflow");
-    unchecked {
-    counter._value = value - 1;
-    }
+        unchecked {
+            counter._value = value - 1;
+        }
     }
 
     function reset(Counter storage counter) internal {
@@ -658,61 +837,61 @@ library Counters {
 
 library SafeMath {
     function tryAdd(uint256 a, uint256 b)
-    internal
-    pure
-    returns (bool, uint256)
+        internal
+        pure
+        returns (bool, uint256)
     {
-    unchecked {
-    uint256 c = a + b;
-    if (c < a) return (false, 0);
-    return (true, c);
-    }
+        unchecked {
+            uint256 c = a + b;
+            if (c < a) return (false, 0);
+            return (true, c);
+        }
     }
 
     function trySub(uint256 a, uint256 b)
-    internal
-    pure
-    returns (bool, uint256)
+        internal
+        pure
+        returns (bool, uint256)
     {
-    unchecked {
-    if (b > a) return (false, 0);
-    return (true, a - b);
-    }
+        unchecked {
+            if (b > a) return (false, 0);
+            return (true, a - b);
+        }
     }
 
     function tryMul(uint256 a, uint256 b)
-    internal
-    pure
-    returns (bool, uint256)
+        internal
+        pure
+        returns (bool, uint256)
     {
-    unchecked {
-    if (a == 0) return (true, 0);
-    uint256 c = a * b;
-    if (c / a != b) return (false, 0);
-    return (true, c);
-    }
+        unchecked {
+            if (a == 0) return (true, 0);
+            uint256 c = a * b;
+            if (c / a != b) return (false, 0);
+            return (true, c);
+        }
     }
 
     function tryDiv(uint256 a, uint256 b)
-    internal
-    pure
-    returns (bool, uint256)
+        internal
+        pure
+        returns (bool, uint256)
     {
-    unchecked {
-    if (b == 0) return (false, 0);
-    return (true, a / b);
-    }
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a / b);
+        }
     }
 
     function tryMod(uint256 a, uint256 b)
-    internal
-    pure
-    returns (bool, uint256)
+        internal
+        pure
+        returns (bool, uint256)
     {
-    unchecked {
-    if (b == 0) return (false, 0);
-    return (true, a % b);
-    }
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a % b);
+        }
     }
 
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
@@ -740,10 +919,10 @@ library SafeMath {
         uint256 b,
         string memory errorMessage
     ) internal pure returns (uint256) {
-    unchecked {
-    require(b <= a, errorMessage);
-    return a - b;
-    }
+        unchecked {
+            require(b <= a, errorMessage);
+            return a - b;
+        }
     }
 
     function div(
@@ -751,10 +930,10 @@ library SafeMath {
         uint256 b,
         string memory errorMessage
     ) internal pure returns (uint256) {
-    unchecked {
-    require(b > 0, errorMessage);
-    return a / b;
-    }
+        unchecked {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
     }
 
     function mod(
@@ -762,18 +941,22 @@ library SafeMath {
         uint256 b,
         string memory errorMessage
     ) internal pure returns (uint256) {
-    unchecked {
-    require(b > 0, errorMessage);
-    return a % b;
+        unchecked {
+            require(b > 0, errorMessage);
+            return a % b;
+        }
     }
-    }
-}abstract contract ReentrancyGuard {
+}
+
+abstract contract ReentrancyGuard {
     uint256 private constant _NOT_ENTERED = 1;
     uint256 private constant _ENTERED = 2;
     uint256 private _status;
+
     constructor() {
         _status = _NOT_ENTERED;
     }
+
     modifier nonReentrant() {
         require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
         _status = _ENTERED;
@@ -784,8 +967,22 @@ library SafeMath {
 
 contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
+    Counters.Counter private _randomPizzaId;
     Counters.Counter private _IngredientItemIds;
     Counters.Counter private _buyPizzaIds;
+    uint256 private _randomNumerRange;
+    RandomNumberConsumer public randomGenerator;
+
+    struct _randomPizzaDetail {
+        //mahe radom pizza detail
+        uint256 _randomId;
+        string _pizzaname;
+        string _buybase;
+        string _buysauce;
+        string _buyCheese;
+        string _buymeats;
+        string _buytoppings;
+    }
 
     struct Ingredients {
         uint256 _ingredientId;
@@ -811,31 +1008,65 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     mapping(uint256 => Ingredients) public idToPizzaIngredients;
     // mapping(string => bool) public ingredientTokenURIExists;
     mapping(uint256 => pizzabuying) public idToBuyingPizza;
+
+    mapping(uint256 => _randomPizzaDetail) public idToRandomPizza;
+
     //(After if required then add uncomment ingredient check)
-    constructor() ERC721("Pizza Bake", "PNFT") {}
+    constructor(address _randomGeneratorAddress) ERC721("Pizza Bake", "PNFT") {
+        randomGenerator = IRandomNumberGenerator(_randomGeneratorAddress);
+    }
+
     function _burn(uint256 tokenId)
-    internal
-    override(ERC721, ERC721URIStorage)
+        internal
+        override(ERC721, ERC721URIStorage)
     {
         super._burn(tokenId);
     }
 
     function tokenURI(uint256 tokenId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (string memory)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
     {
         return super.tokenURI(tokenId);
     }
 
     /*
-        Requirement
-        BUY INGREDIENTS
-        Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw
-        ingredients’ in the image files, that then become baked ingredients if
-        baked into a pizza)
-    */
+
+*/
+    function randomPizzaDetail(
+        string memory name,
+        string memory base,
+        string memory sauce,
+        string memory cheese,
+        string memory meats,
+        string memory toppings,
+        uint256 price
+    ) public onlyOwner returns (uint256) {
+        _randomPizzaId.increment();
+        uint256 _randomId = _randomPizzaId.current();
+        require(!_exists(_randomId));
+        _randomPizzaDetail memory randomPizzaDetail = _randomPizzaDetail(
+            _randomId,
+            name,
+            base,
+            sauce,
+            cheese,
+            meats,
+            toppings
+        );
+        idToRandomPizza[_randomId] = randomPizzaDetail;
+        return _randomId;
+    }
+
+    /*
+    Requirement
+    BUY INGREDIENTS
+    Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw
+    ingredients’ in the image files, that then become baked ingredients if
+    baked into a pizza)
+*/
     //these are _mint for common "users  Side"
     //Good
     function _mintPizzaIngretients(
@@ -863,12 +1094,12 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /*
-    2) 	BAKE
-    o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of
-        0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of
-        meats (0-8), any combination of toppings (0-8). Ingredients, when baked, change to
-        a new baked image on the pizza NFT.
-     */
+2) 	BAKE
+o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of
+    0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of
+    meats (0-8), any combination of toppings (0-8). Ingredients, when baked, change to
+    a new baked image on the pizza NFT.
+ */
 
     //Good
     function _mintBakedPizza(
@@ -879,17 +1110,16 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory meats,
         string memory toppings,
         uint256 price
-
-    ) public returns (uint256){
+    ) public returns (uint256) {
         /*
-        one address have not same id in bockchain
-        Due this use Common token all place
+one address have not same id in bockchain
+Due this use Common token all place
 
-        _buyPizzaIds.increment();
-        uint256 bakedTokenID = _buyPizzaIds.current();
-        require(!_exists(bakedTokenID));
+_buyPizzaIds.increment();
+uint256 bakedTokenID = _buyPizzaIds.current();
+require(!_exists(bakedTokenID));
 
-        */
+*/
         _IngredientItemIds.increment();
         uint256 _ingredientId = _IngredientItemIds.current();
         require(!_exists(_ingredientId));
@@ -911,11 +1141,9 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         idToBuyingPizza[_ingredientId] = newbuyingPizza;
         return _ingredientId;
     }
+
     //    (testing)
-    function buyPizzaConformed(uint256 _tokenId)
-    public
-    payable
-    {
+    function buyPizzaConformed(uint256 _tokenId) public payable {
         require(msg.sender != address(0));
         require(_exists(_tokenId));
         address tokenOwner = ownerOf(_tokenId);
@@ -929,18 +1157,19 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         _pizzaID.isConformed = true;
         idToBuyingPizza[_tokenId] = _pizzaID;
     }
+
     /*
-    BUY & BAKE
-    Purchase ingredients & bake pizza in one transaction (= cost of ingredients @
-    0.01ETH + cost of baking @ 0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1
-    cheese, any combination of meats (0-8), any combination of toppings (0-8))
-    */
+BUY & BAKE
+Purchase ingredients & bake pizza in one transaction (= cost of ingredients @
+0.01ETH + cost of baking @ 0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1
+cheese, any combination of meats (0-8), any combination of toppings (0-8))
+*/
 
     function buyBake(
         string[] memory ingredientTokenURI,
         string[] memory name,
-        uint[] memory qty,
-        uint[] memory price,
+        uint256[] memory qty,
+        uint256[] memory price,
         string memory _bakedPizzaTokenURI,
         string memory base,
         string memory sauce,
@@ -949,7 +1178,6 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory toppings,
         uint256 totalprice
     ) public {
-
         for (uint256 i = 0; ingredientTokenURI.length > i; i++) {
             _IngredientItemIds.increment();
             uint256 _ingredientId = _IngredientItemIds.current();
@@ -965,16 +1193,24 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
             idToPizzaIngredients[_ingredientId] = ingredientDetail;
         }
 
-
-        uint256 minteID = _mintBakedPizza(_bakedPizzaTokenURI, base, sauce, cheese, meats, toppings, totalprice);
+        uint256 minteID = _mintBakedPizza(
+            _bakedPizzaTokenURI,
+            base,
+            sauce,
+            cheese,
+            meats,
+            toppings,
+            totalprice
+        );
         buyPizzaConformed(minteID);
     }
+
     /*
-    4) 	REBAKE
-        Allows user to make changes to an existing pizza in their wallet by adding
-        ingredients they hold and/or removing (and burning) ingredients that are on the
-        existing pizza. Same pizza parameters as above apply to this function.
-        */
+4) 	REBAKE
+    Allows user to make changes to an existing pizza in their wallet by adding
+    ingredients they hold and/or removing (and burning) ingredients that are on the
+    existing pizza. Same pizza parameters as above apply to this function.
+    */
     //Good
     function reBake(
         uint256 tokenId,
@@ -987,9 +1223,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         //Please check
         /// Will Work on Remove ingredient
         require(msg.sender != address(0));
-        pizzabuying memory _buyingPizzaItem = idToBuyingPizza[
-        tokenId
-        ];
+        pizzabuying memory _buyingPizzaItem = idToBuyingPizza[tokenId];
         require(_buyingPizzaItem.isConformed == false);
         require(_buyingPizzaItem._isDisassembles == false);
         _buyingPizzaItem._buybase = base;
@@ -998,28 +1232,39 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         _buyingPizzaItem._buymeats = meats;
         _buyingPizzaItem._buytoppings = toppings;
         idToBuyingPizza[tokenId] = _buyingPizzaItem;
+        // reqmended checker
+        //burn build function used
     }
+
     /*
-    5) 	UNBAKE
-    Disassembles an existing pizza into its constituent NFT ingredient parts for
-    a cost of 0.05ETH. Baked ingredients, when unbaked, revert to the raw
-    ingredient image NFT.
-     */
-    function unBake(
-        uint256 tokenId
-    ) public {
+5) 	UNBAKE
+Disassembles an existing pizza into its constituent NFT ingredient parts for
+a cost of 0.05ETH. Baked ingredients, when unbaked, revert to the raw
+ingredient image NFT.
+ */
+    function unBake(uint256 tokenId) public {
         require(msg.sender != address(0));
-        pizzabuying memory _buyingPizzaItem = idToBuyingPizza[
-        tokenId
-        ];
+        pizzabuying memory _buyingPizzaItem = idToBuyingPizza[tokenId];
         require(_buyingPizzaItem.isConformed == false);
         _buyingPizzaItem._isDisassembles = true;
         idToBuyingPizza[tokenId] = _buyingPizzaItem;
+        //Full NFT Burn
+        //0.05ETH transfer to owner
     }
 
-    function getValue(uint256 val) public
-    payable returns (uint256){
-        return msg.value;
+    /*   RANDOM BAKE
+ Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any
+ combination of meats, any combination of toppings, all completed in one
+ transaction and randomized using Chain-link oracle for cost of 0.05 ETH*/
+    uint32 public randomPizzaId;
+
+    function generatedRandomPizzaId(uint256 _val) public {
+        randomGenerator.getRandomNumber(_val);
+        // randomGenerator.getRandomNumber(_val, _randomNumerRange);
+    }
+
+    function BakedRandomPizza() public {
+        uint32 randomId = randomGenerator.viewRandomResult();
     }
 }
 
@@ -1029,12 +1274,12 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     https://rinkeby.etherscan.io/address/0x7e4D0841534B135298df2cf9C2cD391B2D34678F#writeContract
  */
 
-//  	RANDOM BAKE
-// o 	Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any
-// 	combination of meats, any combination of toppings, all completed in one
-// 	transaction and randomized using Chain-link oracle for cost of 0.05 ETH
 // 6) 	CLAIM
 // o 	Allows users to claim any rewards they may be entitled to
 //  	Gas fees for all UI smart contract interactions to be paid by user.
 
 // 	This is the smart contract functuanlity that must be showed through the design
+
+
+
+

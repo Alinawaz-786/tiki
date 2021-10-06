@@ -169,12 +169,18 @@ contract RandomNumberConsumer is VRFConsumerBase {
         ); // Hash user seed and blockhash
         return requestRandomness(keyHash, fee, seed);
     }
-
+   uint256 number = 10;
     function fulfillRandomness(bytes32 requestId, uint256 randomness)
         internal
         override
     {
         randomResult = (randomness % 50) + 1;
+    }
+
+
+
+    function setNumber(uint256 num) public {
+        number = num;
     }
 
     function getDraw(uint256 userProvidedSeed)
