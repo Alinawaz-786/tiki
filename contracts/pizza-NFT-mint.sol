@@ -1131,17 +1131,9 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     uint32 public randomPizzaId;
-
+    // Random function wait max 1 mintus the use index to get the 5 array random values.
     function generatedRandomPizzaId(uint256 _val) public {
         randomGenerator.getRandomNumber(_val);
-        //Need Array.
-        //Every Ingredient Array[i].
-        //Return Array then easy to make Picture process 
-        /*
-            {
-            } 
-        */
-        
     }
     function BakedRandomPizza(
     string  memory _buybase,
