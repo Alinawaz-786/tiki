@@ -141,9 +141,9 @@ contract RandomNumberConsumer is VRFConsumerBase {
         
         return requestRandomness(keyHash, fee, seed);
     }
-    function getArray(uint256[] memory array) internal returns (uint256[] memory) {
+    /*function getArray(uint256[] memory array) internal returns (uint256[] memory) {
       return array;
-    }
+    }*/
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     
           uint256[] memory randomArray = new uint256[](5);
