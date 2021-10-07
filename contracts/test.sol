@@ -124,8 +124,8 @@ pragma solidity ^0.8.4;
 contract RandomNumberConsumer is VRFConsumerBase {
     bytes32 internal keyHash;
     uint256 internal fee;
-    uint256 public randomResult;
-
+    uint256 public randomIndex;
+  
     constructor()
         VRFConsumerBase(
             0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B, // VRF Coordinator
@@ -135,63 +135,30 @@ contract RandomNumberConsumer is VRFConsumerBase {
         keyHash = 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311;
         fee = 0.5 * 10**18;
     }
-
-    function getRandomNumber(uint256 _seed) public returns (bytes32 requestId) {
-        require(
-            LINK.balanceOf(address(this)) >= fee,
-            "Not enough LINK - fill contract with faucet"
-        );
-        requestRandomness(keyHash, fee, _seed);
-    }
-
-    function expand(uint256 randomValue, uint256 n)
-        public
-        pure
-        returns (uint256[] memory expandedValues)
-    {
-        expandedValues = new uint256[](n);
-        for (uint256 i = 0; i < n; i++) {
-            expandedValues[i] = uint256(keccak256(abi.encode(randomValue, i)));
-        }
-        return expandedValues;
-    }
-
-    function rollDice(uint256 userProvidedSeed)
-        public
-        returns (bytes32 requestId)
-    {
-        require(
-            LINK.balanceOf(address(this)) > fee,
-            "Not enough LINK - fill contract with faucet"
-        );
-        uint256 seed = uint256(
-            keccak256(abi.encode(userProvidedSeed, blockhash(block.number)))
-        ); // Hash user seed and blockhash
+    function rollDice(uint256 userProvidedSeed) public returns (bytes32 requestId) {
+        require(LINK.balanceOf(address(this)) > fee, "Not enough LINK - fill contract with faucet");
+        uint256 seed = uint256(keccak256(abi.encode(userProvidedSeed, blockhash(block.number)))); // Hash user seed and blockhash
+        
         return requestRandomness(keyHash, fee, seed);
     }
-   uint256 number = 10;
-    function fulfillRandomness(bytes32 requestId, uint256 randomness)
-        internal
-        override
-    {
-        randomResult = (randomness % 50) + 1;
+    function getArray(uint256[] memory array) internal returns (uint256[] memory) {
+      return array;
     }
-
-
-
-    function setNumber(uint256 num) public {
-        number = num;
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+    
+          uint256[] memory randomArray = new uint256[](5);
+        uint256 tempRandomResult = (randomness % 10) + 1;
+        randomArray[randomIndex] = tempRandomResult;
+        randomIndex = randomIndex + 1;
+        getArray(randomArray);
     }
-
-    function getDraw(uint256 userProvidedSeed)
-        public
-        returns (uint256[] memory)
-    {
+    function getDraw(uint256 userProvidedSeed) public returns (uint256[] memory) {
         uint256[] memory draw = new uint256[](5);
-
+        randomIndex = 0;
         for (uint256 i = 0; i < 5; i++) {
             draw[i] = uint256(rollDice(userProvidedSeed));
         }
         return draw;
     }
+ 
 }

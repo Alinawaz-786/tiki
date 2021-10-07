@@ -113,17 +113,16 @@ pragma solidity ^0.8.4;
 
 interface IRandomNumberGenerator {
     // , uint256 num
-    function getRandomNumber(uint256 _seed)
-        external
-        returns (bytes32);
+    function getRandomNumber(uint256 _seed) external returns (bytes32);
 
     function viewRandomResult() external view returns (uint32);
 }
 
-contract RandomNumberConsumer is VRFConsumerBase {
+contract RandomNumberConsumer is VRFConsumerBase, IRandomNumberGenerator {
     bytes32 internal keyHash;
     uint256 internal fee;
     uint256 public randomResult;
+    uint256 public randomIndex;
 
     constructor()
         VRFConsumerBase(
@@ -135,8 +134,9 @@ contract RandomNumberConsumer is VRFConsumerBase {
         fee = 0.5 * 10**18;
     }
 
-    uint256  rangeNumber;
-// , uint256 num
+    uint256 rangeNumber;
+
+    // , uint256 num
     function getRandomNumber(uint256 _seed)
         public
         override
@@ -149,14 +149,20 @@ contract RandomNumberConsumer is VRFConsumerBase {
         // rangeNumber = num;
         requestRandomness(keyHash, fee, _seed);
     }
-
-    function fulfillRandomness(bytes32 requestId, uint256 randomness)
-        internal
-        override
-    {
-        if (rangeNumber > 1) {
-            randomResult = (randomness % 5) + 1;
+   function getDraw(uint256 userProvidedSeed) public returns (uint256[] memory) {
+        uint256[] memory draw = new uint256[](5);
+        randomIndex = 0;
+        for (uint256 i = 0; i < 5; i++) {
+            draw[i] = uint256(getRandomNumber(userProvidedSeed));
         }
+        return draw;
+    }
+function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+    
+        uint256[] memory randomArray = new uint256[](5);
+        uint256 tempRandomResult = (randomness % 10) + 1;
+        randomArray[randomIndex] = tempRandomResult;
+        randomIndex = randomIndex + 1;
     }
 
     function viewRandomResult() external view override returns (uint32) {
@@ -971,10 +977,10 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     Counters.Counter private _IngredientItemIds;
     Counters.Counter private _buyPizzaIds;
     uint256 private _randomNumerRange;
-    RandomNumberConsumer public randomGenerator;
+    IRandomNumberGenerator public randomGenerator;
 
     struct _randomPizzaDetail {
-        //mahe radom pizza detail
+        //only Owner() radom pizza detail
         uint256 _randomId;
         string _pizzaname;
         string _buybase;
@@ -1006,12 +1012,9 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     mapping(uint256 => Ingredients) public idToPizzaIngredients;
-    // mapping(string => bool) public ingredientTokenURIExists;
     mapping(uint256 => pizzabuying) public idToBuyingPizza;
-
     mapping(uint256 => _randomPizzaDetail) public idToRandomPizza;
 
-    //(After if required then add uncomment ingredient check)
     constructor(address _randomGeneratorAddress) ERC721("Pizza Bake", "PNFT") {
         randomGenerator = IRandomNumberGenerator(_randomGeneratorAddress);
     }
@@ -1032,9 +1035,7 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         return super.tokenURI(tokenId);
     }
 
-    /*
-
-*/
+    /*Only Owner() use this function.*/
     function randomPizzaDetail(
         string memory name,
         string memory base,
@@ -1060,15 +1061,6 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         return _randomId;
     }
 
-    /*
-    Requirement
-    BUY INGREDIENTS
-    Purchase individual ingredients @ 0.01ETH per ingredient (these will be ‘raw
-    ingredients’ in the image files, that then become baked ingredients if
-    baked into a pizza)
-*/
-    //these are _mint for common "users  Side"
-    //Good
     function _mintPizzaIngretients(
         string memory ingredientTokenURI,
         string memory name,
@@ -1078,11 +1070,8 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         _IngredientItemIds.increment();
         uint256 _ingredientId = _IngredientItemIds.current();
         require(!_exists(_ingredientId));
-        // require(!ingredientTokenURIExists[ingredientTokenURI]);
         _mint(owner(), _ingredientId);
-        //ipfs mint by ower of smart contract
         _setTokenURI(_ingredientId, ingredientTokenURI);
-        // ingredientTokenURIExists[ingredientTokenURI] = true;
         Ingredients memory ingredientDetail = Ingredients(
             _ingredientId,
             name,
@@ -1093,15 +1082,6 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         return _ingredientId;
     }
 
-    /*
-2) 	BAKE
-o 	Allows users to combine ingredients held in their wallet to form a pizza for a cost of
-    0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1 cheese, any combination of
-    meats (0-8), any combination of toppings (0-8). Ingredients, when baked, change to
-    a new baked image on the pizza NFT.
- */
-
-    //Good
     function _mintBakedPizza(
         string memory _bakedPizzaTokenURI,
         string memory base,
@@ -1111,15 +1091,6 @@ o 	Allows users to combine ingredients held in their wallet to form a pizza for 
         string memory toppings,
         uint256 price
     ) public returns (uint256) {
-        /*
-one address have not same id in bockchain
-Due this use Common token all place
-
-_buyPizzaIds.increment();
-uint256 bakedTokenID = _buyPizzaIds.current();
-require(!_exists(bakedTokenID));
-
-*/
         _IngredientItemIds.increment();
         uint256 _ingredientId = _IngredientItemIds.current();
         require(!_exists(_ingredientId));
@@ -1142,7 +1113,6 @@ require(!_exists(bakedTokenID));
         return _ingredientId;
     }
 
-    //    (testing)
     function buyPizzaConformed(uint256 _tokenId) public payable {
         require(msg.sender != address(0));
         require(_exists(_tokenId));
@@ -1157,13 +1127,6 @@ require(!_exists(bakedTokenID));
         _pizzaID.isConformed = true;
         idToBuyingPizza[_tokenId] = _pizzaID;
     }
-
-    /*
-BUY & BAKE
-Purchase ingredients & bake pizza in one transaction (= cost of ingredients @
-0.01ETH + cost of baking @ 0.01 ETH – parameters: 1x base, up to 1 sauce, up to 1
-cheese, any combination of meats (0-8), any combination of toppings (0-8))
-*/
 
     function buyBake(
         string[] memory ingredientTokenURI,
@@ -1205,23 +1168,16 @@ cheese, any combination of meats (0-8), any combination of toppings (0-8))
         buyPizzaConformed(minteID);
     }
 
-    /*
-4) 	REBAKE
-    Allows user to make changes to an existing pizza in their wallet by adding
-    ingredients they hold and/or removing (and burning) ingredients that are on the
-    existing pizza. Same pizza parameters as above apply to this function.
-    */
-    //Good
     function reBake(
         uint256 tokenId,
         string memory base,
         string memory sauce,
         string memory cheese,
         string memory meats,
-        string memory toppings
+        string memory toppings,
+        uint256[] memory burnTokenId
     ) public {
-        //Please check
-        /// Will Work on Remove ingredient
+        //Please check Will Work on Remove ingredient
         require(msg.sender != address(0));
         pizzabuying memory _buyingPizzaItem = idToBuyingPizza[tokenId];
         require(_buyingPizzaItem.isConformed == false);
@@ -1232,54 +1188,52 @@ cheese, any combination of meats (0-8), any combination of toppings (0-8))
         _buyingPizzaItem._buymeats = meats;
         _buyingPizzaItem._buytoppings = toppings;
         idToBuyingPizza[tokenId] = _buyingPizzaItem;
-        // reqmended checker
-        //burn build function used
+        for (uint256 i = 0; burnTokenId.length > i; i++) {
+            _burn(burnTokenId[i]);
+        }
+        // recomended checker burn build function used
     }
 
-    /*
-5) 	UNBAKE
-Disassembles an existing pizza into its constituent NFT ingredient parts for
-a cost of 0.05ETH. Baked ingredients, when unbaked, revert to the raw
-ingredient image NFT.
- */
-    function unBake(uint256 tokenId) public {
+    function unBake(uint256 tokenId) public payable {
         require(msg.sender != address(0));
         pizzabuying memory _buyingPizzaItem = idToBuyingPizza[tokenId];
         require(_buyingPizzaItem.isConformed == false);
         _buyingPizzaItem._isDisassembles = true;
         idToBuyingPizza[tokenId] = _buyingPizzaItem;
-        //Full NFT Burn
-        //0.05ETH transfer to owner
+        //Requiedment Full NFT Burn 0.05ETH transfer to owner.must be equal to ETH msg.value
+        payable(owner()).transfer(msg.value);
     }
 
-    /*   RANDOM BAKE
- Bakes a random pizza comprised of 1 base option, up to 1 sauce, up to 1 cheese, any
- combination of meats, any combination of toppings, all completed in one
- transaction and randomized using Chain-link oracle for cost of 0.05 ETH*/
     uint32 public randomPizzaId;
 
     function generatedRandomPizzaId(uint256 _val) public {
         randomGenerator.getRandomNumber(_val);
-        // randomGenerator.getRandomNumber(_val, _randomNumerRange);
+        //Need Array.
+        //Every Ingredient Array[i].
+        //Return Array then easy to make Picture process 
+        /*
+            {
+            } 
+        */
+        
     }
-
-    function BakedRandomPizza() public {
-        uint32 randomId = randomGenerator.viewRandomResult();
+    function BakedRandomPizza(string memory _bakedPizzaTokenURI,uint256 totalprice) public {
+        uint32 _randomId = randomGenerator.viewRandomResult();
+        _randomPizzaDetail memory _randomPizza = idToRandomPizza[_randomId];
+        uint256 minteID = _mintBakedPizza(
+            _bakedPizzaTokenURI,
+            _randomPizza._buybase,
+            _randomPizza._buysauce,
+            _randomPizza._buyCheese,
+            _randomPizza._buymeats,
+            _randomPizza._buytoppings,
+            totalprice
+        );
+        buyPizzaConformed(minteID);
     }
 }
-
 /*
     Final link
     Deploy and verify Smart Contract Link
     https://rinkeby.etherscan.io/address/0x7e4D0841534B135298df2cf9C2cD391B2D34678F#writeContract
  */
-
-// 6) 	CLAIM
-// o 	Allows users to claim any rewards they may be entitled to
-//  	Gas fees for all UI smart contract interactions to be paid by user.
-
-// 	This is the smart contract functuanlity that must be showed through the design
-
-
-
-
