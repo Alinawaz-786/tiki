@@ -1,38 +1,55 @@
+/**
+ *Submitted for verification at Etherscan.io on 2021-10-08
+ */
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
+
 interface LinkTokenInterface {
     function allowance(address owner, address spender)
         external
         view
         returns (uint256 remaining);
+
     function approve(address spender, uint256 value)
         external
         returns (bool success);
+
     function balanceOf(address owner) external view returns (uint256 balance);
+
     function decimals() external view returns (uint8 decimalPlaces);
+
     function decreaseApproval(address spender, uint256 addedValue)
         external
         returns (bool success);
+
     function increaseApproval(address spender, uint256 subtractedValue)
         external;
+
     function name() external view returns (string memory tokenName);
+
     function symbol() external view returns (string memory tokenSymbol);
+
     function totalSupply() external view returns (uint256 totalTokensIssued);
+
     function transfer(address to, uint256 value)
         external
         returns (bool success);
+
     function transferAndCall(
         address to,
         uint256 value,
         bytes calldata data
     ) external returns (bool success);
+
     function transferFrom(
         address from,
         address to,
         uint256 value
     ) external returns (bool success);
 }
+
 contract VRFRequestIDBase {
     function makeVRFInputSeed(
         bytes32 _keyHash,
@@ -45,6 +62,7 @@ contract VRFRequestIDBase {
                 keccak256(abi.encode(_keyHash, _userSeed, _requester, _nonce))
             );
     }
+
     function makeRequestId(bytes32 _keyHash, uint256 _vRFInputSeed)
         internal
         pure
@@ -53,10 +71,12 @@ contract VRFRequestIDBase {
         return keccak256(abi.encodePacked(_keyHash, _vRFInputSeed));
     }
 }
+
 abstract contract VRFConsumerBase is VRFRequestIDBase {
     function fulfillRandomness(bytes32 requestId, uint256 randomness)
         internal
         virtual;
+
     function requestRandomness(
         bytes32 _keyHash,
         uint256 _fee,
@@ -72,14 +92,17 @@ abstract contract VRFConsumerBase is VRFRequestIDBase {
         nonces[_keyHash] = nonces[_keyHash] + 1;
         return makeRequestId(_keyHash, vRFSeed);
     }
+
     LinkTokenInterface internal immutable LINK;
     address private immutable vrfCoordinator;
     mapping(bytes32 => uint256) /* keyHash */ /* nonce */
         private nonces;
+
     constructor(address _vrfCoordinator, address _link) {
         vrfCoordinator = _vrfCoordinator;
         LINK = LinkTokenInterface(_link);
     }
+
     function rawFulfillRandomness(bytes32 requestId, uint256 randomness)
         external
     {
@@ -91,15 +114,20 @@ abstract contract VRFConsumerBase is VRFRequestIDBase {
     }
 }
 pragma solidity ^0.8.4;
+
 interface IRandomNumberGenerator {
     function getRandomNumber(uint256 _seed) external returns (bytes32);
-    function viewRandomResult() external view returns (uint32);
+
+    function viewRandomResult() external view returns (uint256);
+    function viewRandomResult2() external view returns (uint[]);
 }
+
 contract RandomNumberConsumer is VRFConsumerBase, IRandomNumberGenerator {
     bytes32 internal keyHash;
     uint256 internal fee;
     uint256 public randomResult;
     uint256 public randomIndex;
+
     constructor()
         VRFConsumerBase(
             0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B, // VRF Coordinator
@@ -109,7 +137,9 @@ contract RandomNumberConsumer is VRFConsumerBase, IRandomNumberGenerator {
         keyHash = 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311;
         fee = 0.5 * 10**18;
     }
+
     uint256 rangeNumber;
+
     function getRandomNumber(uint256 _seed)
         public
         override
@@ -122,7 +152,11 @@ contract RandomNumberConsumer is VRFConsumerBase, IRandomNumberGenerator {
         // rangeNumber = num;
         requestRandomness(keyHash, fee, _seed);
     }
-   function getDraw(uint256 userProvidedSeed) public returns (uint256[] memory) {
+
+    function getDraw(uint256 userProvidedSeed)
+        public
+        returns (uint256[] memory)
+    {
         uint256[] memory draw = new uint256[](5);
         randomIndex = 0;
         for (uint256 i = 0; i < 5; i++) {
@@ -130,22 +164,38 @@ contract RandomNumberConsumer is VRFConsumerBase, IRandomNumberGenerator {
         }
         return draw;
     }
-function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        uint256[] memory randomArray = new uint256[](5);
+
+    uint256[] public randomArray = new uint256[](5);
+
+    function fulfillRandomness(bytes32 requestId, uint256 randomness)
+        internal
+        override
+    {
         uint256 tempRandomResult = (randomness % 10) + 1;
         randomArray[randomIndex] = tempRandomResult;
         randomIndex = randomIndex + 1;
     }
-    function viewRandomResult() external view override returns (uint32) {
-        return uint32(randomResult);
+
+    function viewRandomResult() external view override returns (uint256) {
+        return randomResult;
+    }
+
+    function viewRandomResult() external view override returns (uint256) {
+    // function viewRandomResultArray() external view override returns (uint[] memory) {
+    //     return randomArray;
+    // }
+         function viewRandomResult2() public view override returns(uint[] memory) {
+        return randomArray;
     }
 }
+
 interface IERC165 {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
 
 library Strings {
     bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
+
     function toString(uint256 value) internal pure returns (string memory) {
         if (value == 0) {
             return "0";
@@ -164,6 +214,7 @@ library Strings {
         }
         return string(buffer);
     }
+
     function toHexString(uint256 value) internal pure returns (string memory) {
         if (value == 0) {
             return "0x00";
@@ -176,6 +227,7 @@ library Strings {
         }
         return toHexString(value, length);
     }
+
     function toHexString(uint256 value, uint256 length)
         internal
         pure
@@ -192,6 +244,7 @@ library Strings {
         return string(buffer);
     }
 }
+
 interface IERC721 is IERC165 {
     event Transfer(
         address indexed from,
@@ -208,19 +261,26 @@ interface IERC721 is IERC165 {
         address indexed operator,
         bool approved
     );
+
     function balanceOf(address owner) external view returns (uint256 balance);
+
     function ownerOf(uint256 tokenId) external view returns (address owner);
+
     function approve(address to, uint256 tokenId) external;
+
     function getApproved(uint256 tokenId)
         external
         view
         returns (address operator);
+
     function setApprovalForAll(address operator, bool _approved) external;
+
     function isApprovedForAll(address owner, address operator)
         external
         view
         returns (bool);
 }
+
 interface IERC721Receiver {
     function onERC721Received(
         address operator,
@@ -229,11 +289,15 @@ interface IERC721Receiver {
         bytes calldata data
     ) external returns (bytes4);
 }
+
 interface IERC721Metadata is IERC721 {
     function name() external view returns (string memory);
+
     function symbol() external view returns (string memory);
+
     function tokenURI(uint256 tokenId) external view returns (string memory);
 }
+
 library Address {
     function isContract(address account) internal view returns (bool) {
         uint256 size;
@@ -242,6 +306,7 @@ library Address {
         }
         return size > 0;
     }
+
     function sendValue(address payable recipient, uint256 amount) internal {
         require(
             address(this).balance >= amount,
@@ -253,12 +318,14 @@ library Address {
             "Address: unable to send value, recipient may have reverted"
         );
     }
+
     function functionCall(address target, bytes memory data)
         internal
         returns (bytes memory)
     {
         return functionCall(target, data, "Address: low-level call failed");
     }
+
     function functionCall(
         address target,
         bytes memory data,
@@ -266,6 +333,7 @@ library Address {
     ) internal returns (bytes memory) {
         return functionCallWithValue(target, data, 0, errorMessage);
     }
+
     function functionCallWithValue(
         address target,
         bytes memory data,
@@ -279,6 +347,7 @@ library Address {
                 "Address: low-level call with value failed"
             );
     }
+
     function functionCallWithValue(
         address target,
         bytes memory data,
@@ -295,6 +364,7 @@ library Address {
         );
         return verifyCallResult(success, returndata, errorMessage);
     }
+
     function functionStaticCall(address target, bytes memory data)
         internal
         view
@@ -307,6 +377,7 @@ library Address {
                 "Address: low-level static call failed"
             );
     }
+
     function functionStaticCall(
         address target,
         bytes memory data,
@@ -316,6 +387,7 @@ library Address {
         (bool success, bytes memory returndata) = target.staticcall(data);
         return verifyCallResult(success, returndata, errorMessage);
     }
+
     function functionDelegateCall(address target, bytes memory data)
         internal
         returns (bytes memory)
@@ -327,6 +399,7 @@ library Address {
                 "Address: low-level delegate call failed"
             );
     }
+
     function functionDelegateCall(
         address target,
         bytes memory data,
@@ -336,6 +409,7 @@ library Address {
         (bool success, bytes memory returndata) = target.delegatecall(data);
         return verifyCallResult(success, returndata, errorMessage);
     }
+
     function verifyCallResult(
         bool success,
         bytes memory returndata,
@@ -355,14 +429,17 @@ library Address {
         }
     }
 }
+
 abstract contract Context {
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
+
     function _msgData() internal view virtual returns (bytes calldata) {
         return msg.data;
     }
 }
+
 abstract contract ERC165 is IERC165 {
     function supportsInterface(bytes4 interfaceId)
         public
@@ -374,6 +451,7 @@ abstract contract ERC165 is IERC165 {
         return interfaceId == type(IERC165).interfaceId;
     }
 }
+
 contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     using Address for address;
     using Strings for uint256;
@@ -383,10 +461,12 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     mapping(address => uint256) private _balances;
     mapping(uint256 => address) private _tokenApprovals;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
+
     constructor(string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
     }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -399,6 +479,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
             interfaceId == type(IERC721Metadata).interfaceId ||
             super.supportsInterface(interfaceId);
     }
+
     function balanceOf(address owner)
         public
         view
@@ -412,6 +493,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         );
         return _balances[owner];
     }
+
     function ownerOf(uint256 tokenId)
         public
         view
@@ -426,12 +508,15 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         );
         return owner;
     }
+
     function name() public view virtual override returns (string memory) {
         return _name;
     }
+
     function symbol() public view virtual override returns (string memory) {
         return _symbol;
     }
+
     function tokenURI(uint256 tokenId)
         public
         view
@@ -449,9 +534,11 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
                 ? string(abi.encodePacked(baseURI, tokenId.toString()))
                 : "";
     }
+
     function _baseURI() internal view virtual returns (string memory) {
         return "";
     }
+
     function approve(address to, uint256 tokenId) public virtual override {
         address owner = ERC721.ownerOf(tokenId);
         require(to != owner, "ERC721: approval to current owner");
@@ -461,6 +548,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         );
         _approve(to, tokenId);
     }
+
     function getApproved(uint256 tokenId)
         public
         view
@@ -474,6 +562,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         );
         return _tokenApprovals[tokenId];
     }
+
     function setApprovalForAll(address operator, bool approved)
         public
         virtual
@@ -483,6 +572,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         _operatorApprovals[_msgSender()][operator] = approved;
         emit ApprovalForAll(_msgSender(), operator, approved);
     }
+
     function isApprovedForAll(address owner, address operator)
         public
         view
@@ -492,6 +582,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     {
         return _operatorApprovals[owner][operator];
     }
+
     function transferFrom(
         address from,
         address to,
@@ -1131,19 +1222,25 @@ contract pizzaNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     uint32 public randomPizzaId;
+
     // Random function wait max 1 mintus the use index to get the 5 array random values.
     function generatedRandomPizzaId(uint256 _val) public {
-        randomGenerator.getRandomNumber(_val);
+        randomGenerator.getDraw(_val);
     }
+function getRandomPizzaId() public view returns(uint[]  memory) {
+    return randomGenerator.viewRandomResult2();
+}
+
     function BakedRandomPizza(
-    string  memory _buybase,
-    string  memory _buysauce,
-    string  memory _buyCheese,
-    string  memory _buymeats,
-    string  memory _buytoppings,
-    string memory _bakedPizzaTokenURI,
-    uint256 totalprice) public {
-        uint32 _randomId = randomGenerator.viewRandomResult();
+        string memory _buybase,
+        string memory _buysauce,
+        string memory _buyCheese,
+        string memory _buymeats,
+        string memory _buytoppings,
+        string memory _bakedPizzaTokenURI,
+        uint256 totalprice
+    ) public {
+        uint256 _randomId = randomGenerator.viewRandomResult();
         _randomPizzaDetail memory _randomPizza = idToRandomPizza[_randomId];
         uint256 minteID = _mintBakedPizza(
             _bakedPizzaTokenURI,
