@@ -33,7 +33,20 @@ module.exports = {
     apiKey: "XIBRQWVBQ9965HWXU135TCB1HI6CRDJNWW"                //Rinby
   },
   solidity: {
-    version: "0.8.0",
+    compilers: [
+      {
+        version: "0.5.16"
+      },
+      {
+        version: "0.5.7"
+      },
+      {
+        version: "0.8.0"
+      },
+      {
+        version: "0.6.12"
+      }
+    ],
     settings: {
       optimizer: {
         enabled: true,

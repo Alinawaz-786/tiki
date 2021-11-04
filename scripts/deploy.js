@@ -4,9 +4,8 @@ const hre = require("hardhat");
 async function main() {
 
 
-    const Pizza = await hre.ethers.getContractFactory("pizzaNFT");
+    const Pizza = await hre.ethers.getContractFactory("GLDToken");
     const greeter = await Pizza.deploy();
-    await greeter.deployed();
     console.log("Pizza deployed to:", greeter.address);
 
     // const tiki_tokens = await ethers.getContractFactory("SousChef");
